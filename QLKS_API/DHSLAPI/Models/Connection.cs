@@ -63,26 +63,28 @@ namespace QLKSAPI.Models
             {
                 nv = new nhanvien()
                 {
-                    manv = ds.Tables[0].Rows[0]["nv_manv"].ToString(),
+                    manv = ds.Tables[0].Rows[0]["nv_ma"].ToString(),
+                    tdn = ds.Tables[0].Rows[0]["nv_tdn"].ToString(),
                     matkhau = ds.Tables[0].Rows[0]["nv_matkhau"].ToString(),
                     hoten = ds.Tables[0].Rows[0]["nv_hoten"].ToString(),
                     ngaysinh = ds.Tables[0].Rows[0]["nv_ngaysinh"].ToString(),
-                    gioitinh = (bool)ds.Tables[0].Rows[0]["nv_gioitinh"] ? "Nam" : "Nữ",
+                    gioitinh = (bool)ds.Tables[0].Rows[0]["nv_gioitinh"],
                     sdt = ds.Tables[0].Rows[0]["nv_sdt"].ToString(),
                     cmnd = ds.Tables[0].Rows[0]["nv_cmnd"].ToString(),
                     diachi = ds.Tables[0].Rows[0]["nv_diachi"].ToString(),
                     email = ds.Tables[0].Rows[0]["nv_email"].ToString(),
                     khoa = (bool)ds.Tables[0].Rows[0]["nv_khoa"],
+                    xoa = (bool)ds.Tables[0].Rows[0]["nv_xoa"],
                     fileanh = ds.Tables[0].Rows[0]["nv_fileanh"].ToString(),
                     chucVu = new chucvu()
                     {
-                        macv = ds.Tables[0].Rows[0]["cv_macv"].ToString(),
-                        tencv = ds.Tables[0].Rows[0]["cv_tencv"].ToString()
+                        macv = ds.Tables[0].Rows[0]["cv_ma"].ToString(),
+                        tencv = ds.Tables[0].Rows[0]["cv_ten"].ToString()
                     },
                     quyennv = new quyen()
                     {
-                        id = ds.Tables[0].Rows[0]["q_id"].ToString(),
-                        tenquyen = ds.Tables[0].Rows[0]["q_quyen"].ToString(),
+                        maquyen = ds.Tables[0].Rows[0]["q_ma"].ToString(),
+                        tenquyen = ds.Tables[0].Rows[0]["q_ten"].ToString(),
                     }
                 };
             }
@@ -106,32 +108,90 @@ namespace QLKSAPI.Models
                     for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                     {
                         nhanviens.Add(new nhanvien {
-                            manv = ds.Tables[0].Rows[0]["nv_manv"].ToString(),
+                            manv = ds.Tables[0].Rows[0]["nv_ma"].ToString(),
+                            tdn = ds.Tables[0].Rows[0]["nv_tdn"].ToString(),
                             matkhau = ds.Tables[0].Rows[0]["nv_matkhau"].ToString(),
                             hoten = ds.Tables[0].Rows[0]["nv_hoten"].ToString(),
                             ngaysinh = ds.Tables[0].Rows[0]["nv_ngaysinh"].ToString(),
-                            gioitinh = (bool)ds.Tables[0].Rows[0]["nv_gioitinh"] ? "Nam" : "Nữ",
+                            gioitinh = (bool)ds.Tables[0].Rows[0]["nv_gioitinh"],
                             sdt = ds.Tables[0].Rows[0]["nv_sdt"].ToString(),
                             cmnd = ds.Tables[0].Rows[0]["nv_cmnd"].ToString(),
                             diachi = ds.Tables[0].Rows[0]["nv_diachi"].ToString(),
                             email = ds.Tables[0].Rows[0]["nv_email"].ToString(),
                             khoa = (bool)ds.Tables[0].Rows[0]["nv_khoa"],
+                            xoa = (bool)ds.Tables[0].Rows[0]["nv_xoa"],
                             fileanh = ds.Tables[0].Rows[0]["nv_fileanh"].ToString(),
                             chucVu = new chucvu()
                             {
-                                macv = ds.Tables[0].Rows[0]["cv_macv"].ToString(),
-                                tencv = ds.Tables[0].Rows[0]["cv_tencv"].ToString()
+                                macv = ds.Tables[0].Rows[0]["cv_ma"].ToString(),
+                                tencv = ds.Tables[0].Rows[0]["cv_ten"].ToString()
                             },
                             quyennv = new quyen()
                             {
-                                id = ds.Tables[0].Rows[0]["q_id"].ToString(),
-                                tenquyen = ds.Tables[0].Rows[0]["q_quyen"].ToString(),
+                                maquyen = ds.Tables[0].Rows[0]["q_ma"].ToString(),
+                                tenquyen = ds.Tables[0].Rows[0]["q_ten"].ToString(),
                             }
                         });
                     }
                 }
             }
             return nhanviens;
+        }
+
+        public bool insertNhanvien(nhanvien nv)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("insertNhanvien");
+                command.Parameters.AddWithValue("@nv_ma", nv.manv);
+                command.Parameters.AddWithValue("@nv_macv", nv.chucVu.macv);
+                command.Parameters.AddWithValue("@nv_hoten", nv.hoten);
+                command.Parameters.AddWithValue("@nv_ngaysinh", nv.ngaysinh);
+                command.Parameters.AddWithValue("@nv_gioitinh", nv.gioitinh);
+                command.Parameters.AddWithValue("@nv_sdt", nv.sdt);
+                command.Parameters.AddWithValue("@nv_cmnd", nv.cmnd);
+                command.Parameters.AddWithValue("@nv_diachi", nv.diachi);
+                command.Parameters.AddWithValue("@nv_email", nv.email);
+                command.Parameters.AddWithValue("@nv_khoa", nv.khoa);
+                command.Parameters.AddWithValue("@nv_xoa", nv.xoa);
+                command.Parameters.AddWithValue("@nv_tdn", nv.tdn);
+                command.Parameters.AddWithValue("@nv_matkhau", nv.matkhau);
+                command.Parameters.AddWithValue("@nv_maquyen", nv.quyennv.maquyen);
+                command.Parameters.AddWithValue("@nv_fileanh", nv.fileanh);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool updateNhanvien(nhanvien nv)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("updateNhanVien");
+                command.Parameters.AddWithValue("@nv_ma", nv.manv);
+                command.Parameters.AddWithValue("@nv_macv", nv.chucVu.macv);
+                command.Parameters.AddWithValue("@nv_hoten", nv.hoten);
+                command.Parameters.AddWithValue("@nv_ngaysinh", nv.ngaysinh);
+                command.Parameters.AddWithValue("@nv_gioitinh", nv.gioitinh);
+                command.Parameters.AddWithValue("@nv_sdt", nv.sdt);
+                command.Parameters.AddWithValue("@nv_cmnd", nv.cmnd);
+                command.Parameters.AddWithValue("@nv_diachi", nv.diachi);
+                command.Parameters.AddWithValue("@nv_email", nv.email);
+                command.Parameters.AddWithValue("@nv_khoa", nv.khoa);
+                command.Parameters.AddWithValue("@nv_xoa", nv.xoa);
+                command.Parameters.AddWithValue("@nv_tdn", nv.tdn);
+                command.Parameters.AddWithValue("@nv_matkhau", nv.matkhau);
+                command.Parameters.AddWithValue("@nv_maquyen", nv.quyennv.maquyen);
+                command.Parameters.AddWithValue("@nv_fileanh", nv.fileanh);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
         }
     }
 }

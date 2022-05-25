@@ -7,7 +7,7 @@ namespace QLKSAPI.Models
 {
     public class quyen
     {
-        public string id { get; set; }
+        public string maquyen { get; set; }
         public string tenquyen { get; set; }
     }
 }

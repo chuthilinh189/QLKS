@@ -16,7 +16,7 @@ namespace DHSLAPI.Controllers
         ///Input: mã nhân viên, mật khẩu
         ///Nếu đúng trả về thông tin nhân viên
         ///Nếu sai trả về null
-        [HttpGet]
+        [HttpPost]
         [Route("api/nhanvien_login")]
         public nhanvien Login([FromBody] nhanvien nv)
         {
@@ -33,6 +33,23 @@ namespace DHSLAPI.Controllers
         public List<nhanvien> getAllNhanviens()
         {
             return con.getAllNhanviens();
+        }
+
+        [HttpPost]
+        [Route("api/nhanvien_insert")]
+        public HttpResponseMessage InsertUser([FromBody] nhanvien nv)
+        {
+            nv.manv = Helper.EnCode(DateTime.Now.ToString("yyyy-mm-dd:hh-mm-ss"));
+            return con.insertNhanvien(nv) ? Request.CreateResponse(HttpStatusCode.Created, nv) : Request.CreateResponse(HttpStatusCode.Conflict);
+        }
+
+        [HttpPut]
+        [Route("api/nhanvien_update")]
+        public HttpResponseMessage UpdateUser([FromBody] nhanvien nv)
+        {
+            if (nv.matkhau != string.Empty)
+                nv.matkhau = Helper.EnCode(nv.matkhau);
+            return con.updateNhanvien(nv) ? Request.CreateResponse(HttpStatusCode.OK, nv) : Request.CreateResponse(HttpStatusCode.NotFound);
         }
     }
 }
