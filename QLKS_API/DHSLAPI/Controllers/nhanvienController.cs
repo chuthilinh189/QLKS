@@ -20,12 +20,8 @@ namespace DHSLAPI.Controllers
         [Route("api/nhanvien_login")]
         public nhanvien Login([FromBody] nhanvien nv)
         {
-            return con.Login(new nhanvien()
-            {
-                manv = nv.manv,
-                //matkhau = Helper.EnCode(nv.matkhau)
-                matkhau = nv.matkhau
-            });
+            nv.matkhau = Helper.EnCode(nv.matkhau);
+            return con.Login(nv.tdn, nv.matkhau);
         }
 
         [HttpGet]
@@ -40,6 +36,7 @@ namespace DHSLAPI.Controllers
         public HttpResponseMessage InsertUser([FromBody] nhanvien nv)
         {
             nv.manv = Helper.EnCode(DateTime.Now.ToString("yyyy-mm-dd:hh-mm-ss"));
+            nv.matkhau = Helper.EnCode(nv.matkhau);
             return con.insertNhanvien(nv) ? Request.CreateResponse(HttpStatusCode.Created, nv) : Request.CreateResponse(HttpStatusCode.Conflict);
         }
 
