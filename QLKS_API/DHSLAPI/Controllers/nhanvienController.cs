@@ -31,6 +31,20 @@ namespace DHSLAPI.Controllers
             return con.getAllNhanviens();
         }
 
+        [HttpGet]
+        [Route("api/nhanvien_by_ma")]
+        public nhanvien getNhanvienByMa(string manv)
+        {
+            return con.getNhanvienByMa(manv);
+        }
+
+        [HttpGet]
+        [Route("api/nhanvien_search")]
+        public List<nhanvien> searchNhanviens(string key)
+        {
+            return con.searchNhanviens(key);
+        }
+
         [HttpPost]
         [Route("api/nhanvien_insert")]
         public HttpResponseMessage InsertUser([FromBody] nhanvien nv)
@@ -48,5 +62,7 @@ namespace DHSLAPI.Controllers
                 nv.matkhau = Helper.EnCode(nv.matkhau);
             return con.updateNhanvien(nv) ? Request.CreateResponse(HttpStatusCode.OK, nv) : Request.CreateResponse(HttpStatusCode.NotFound);
         }
+
+
     }
 }

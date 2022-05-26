@@ -191,8 +191,10 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\chucvuController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\nhanvienController.cs" />
+    <Compile Include="Controllers\quyenController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -260,8 +262,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\chucvu\" />
     <Folder Include="Views\Default\" />
     <Folder Include="Views\MainEngine\" />
+    <Folder Include="Views\quyen\" />
     <Folder Include="Views\ShipInfo\" />
     <Folder Include="Views\user\" />
   </ItemGroup>

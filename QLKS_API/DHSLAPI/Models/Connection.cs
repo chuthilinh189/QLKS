@@ -138,6 +138,100 @@ namespace QLKSAPI.Models
             return nhanviens;
         }
 
+        public nhanvien getNhanvienByMa(string manv)
+        {
+            nhanvien nv = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("getNhanvienByMa");
+                cmd.Parameters.AddWithValue("@manv", manv);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    nv = new nhanvien()
+                    {
+                        manv = ds.Tables[0].Rows[0]["nv_ma"].ToString(),
+                        tdn = ds.Tables[0].Rows[0]["nv_tdn"].ToString(),
+                        matkhau = ds.Tables[0].Rows[0]["nv_matkhau"].ToString(),
+                        hoten = ds.Tables[0].Rows[0]["nv_hoten"].ToString(),
+                        ngaysinh = ds.Tables[0].Rows[0]["nv_ngaysinh"].ToString(),
+                        gioitinh = (bool)ds.Tables[0].Rows[0]["nv_gioitinh"],
+                        sdt = ds.Tables[0].Rows[0]["nv_sdt"].ToString(),
+                        cmnd = ds.Tables[0].Rows[0]["nv_cmnd"].ToString(),
+                        diachi = ds.Tables[0].Rows[0]["nv_diachi"].ToString(),
+                        email = ds.Tables[0].Rows[0]["nv_email"].ToString(),
+                        khoa = (bool)ds.Tables[0].Rows[0]["nv_khoa"],
+                        xoa = (bool)ds.Tables[0].Rows[0]["nv_xoa"],
+                        fileanh = ds.Tables[0].Rows[0]["nv_fileanh"].ToString(),
+                        chucVu = new chucvu()
+                        {
+                            macv = ds.Tables[0].Rows[0]["cv_ma"].ToString(),
+                            tencv = ds.Tables[0].Rows[0]["cv_ten"].ToString()
+                        },
+                        quyennv = new quyen()
+                        {
+                            maquyen = ds.Tables[0].Rows[0]["q_ma"].ToString(),
+                            tenquyen = ds.Tables[0].Rows[0]["q_ten"].ToString(),
+                        }
+                    };
+                }
+            }
+            return nv;
+        }
+
+        public List<nhanvien> searchNhanviens(string key)
+        {
+            List<nhanvien> nhanviens = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("searchNhanviens");
+                cmd.Parameters.AddWithValue("@key", key);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    nhanviens = new List<nhanvien>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        nhanviens.Add(new nhanvien
+                        {
+                            manv = ds.Tables[0].Rows[i]["nv_ma"].ToString(),
+                            tdn = ds.Tables[0].Rows[i]["nv_tdn"].ToString(),
+                            matkhau = ds.Tables[0].Rows[i]["nv_matkhau"].ToString(),
+                            hoten = ds.Tables[0].Rows[i]["nv_hoten"].ToString(),
+                            ngaysinh = ds.Tables[0].Rows[i]["nv_ngaysinh"].ToString(),
+                            gioitinh = (bool)ds.Tables[0].Rows[i]["nv_gioitinh"],
+                            sdt = ds.Tables[0].Rows[i]["nv_sdt"].ToString(),
+                            cmnd = ds.Tables[0].Rows[i]["nv_cmnd"].ToString(),
+                            diachi = ds.Tables[0].Rows[i]["nv_diachi"].ToString(),
+                            email = ds.Tables[0].Rows[i]["nv_email"].ToString(),
+                            khoa = (bool)ds.Tables[0].Rows[i]["nv_khoa"],
+                            xoa = (bool)ds.Tables[0].Rows[i]["nv_xoa"],
+                            fileanh = ds.Tables[0].Rows[i]["nv_fileanh"].ToString(),
+                            chucVu = new chucvu()
+                            {
+                                macv = ds.Tables[0].Rows[i]["cv_ma"].ToString(),
+                                tencv = ds.Tables[0].Rows[i]["cv_ten"].ToString()
+                            },
+                            quyennv = new quyen()
+                            {
+                                maquyen = ds.Tables[0].Rows[i]["q_ma"].ToString(),
+                                tenquyen = ds.Tables[0].Rows[i]["q_ten"].ToString(),
+                            }
+                        });
+                    }
+                }
+            }
+            return nhanviens;
+        }
+
         public bool insertNhanvien(nhanvien nv)
         {
             bool isSuccess = false;
@@ -192,6 +286,60 @@ namespace QLKSAPI.Models
                 isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
             }
             return isSuccess;
+        }
+
+        public List<chucvu> getAllChucvus()
+        {
+            List<chucvu> chucvus = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("getAllChucvus");
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    chucvus = new List<chucvu>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        chucvus.Add(new chucvu
+                        {
+                            macv = ds.Tables[0].Rows[i]["cv_ma"].ToString(),
+                            tencv = ds.Tables[0].Rows[i]["cv_ten"].ToString()
+                        });
+                    }
+                }
+            }
+            return chucvus;
+        }
+
+        public List<quyen> getAllQuyens()
+        {
+            List<quyen> quyens = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("getAllQuyens");
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    quyens = new List<quyen>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        quyens.Add(new quyen
+                        {
+                            maquyen = ds.Tables[0].Rows[i]["q_ma"].ToString(),
+                            tenquyen = ds.Tables[0].Rows[i]["q_ten"].ToString()
+                        });
+                    }
+                }
+            }
+            return quyens;
         }
     }
 }

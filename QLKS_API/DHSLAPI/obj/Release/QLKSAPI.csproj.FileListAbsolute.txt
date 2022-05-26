@@ -298,3 +298,4 @@ D:\QLKhachSan\QLKS\QLKS_API\DHSLAPI\obj\Release\QLKSAPI.csproj.AssemblyReference
 D:\QLKhachSan\QLKS\QLKS_API\DHSLAPI\obj\Release\QLKSAPI.csproj.CoreCompileInputs.cache
 D:\QLKhachSan\QLKS\QLKS_API\DHSLAPI\obj\Release\DHSLAPI.dll
 D:\QLKhachSan\QLKS\QLKS_API\DHSLAPI\obj\Release\DHSLAPI.pdb
+D:\QLKhachSan\QLKS\QLKS_API\DHSLAPI\obj\Release\QLKSAPI.csproj.CopyComplete
