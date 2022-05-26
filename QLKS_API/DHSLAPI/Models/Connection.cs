@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QLKSAPI.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -341,5 +342,130 @@ namespace QLKSAPI.Models
             }
             return quyens;
         }
+        public List<loaiphong> getAllLoaiPhongs()
+        {
+            List<loaiphong> loaiphongs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("getAllLoaiPhongs");
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    loaiphongs = new List<loaiphong>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        loaiphongs.Add(new loaiphong
+                        {
+                            lp_ma = ds.Tables[0].Rows[i]["lp_ma"].ToString(),
+                            lp_ten = ds.Tables[0].Rows[i]["lp_ten"].ToString(),
+                            lp_giaphong = (int)ds.Tables[0].Rows[i]["lp_giaphong"],
+                            lp_soluong = (int)ds.Tables[0].Rows[i]["lp_soluong"],
+                            lp_solandat = (int)ds.Tables[0].Rows[i]["lp_solandat"],
+                            
+                        });
+                    }
+                }
+            }
+            return loaiphongs;
+        }
+        public loaiphong getLoaiPhongByMa(string lp_ma)
+        {
+            loaiphong lp = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("getLoaiPhongByMa");
+                cmd.Parameters.AddWithValue("@lp_ma", lp_ma);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    lp = new loaiphong()
+                    {
+                        lp_ma = ds.Tables[0].Rows[0]["lp_ma"].ToString(),
+                        lp_ten = ds.Tables[0].Rows[0]["lp_ten"].ToString(),
+                        lp_giaphong = (int)ds.Tables[0].Rows[0]["lp_giaphong"],
+                        lp_soluong = (int)ds.Tables[0].Rows[0]["lp_soluong"],
+                        lp_solandat = (int)ds.Tables[0].Rows[0]["lp_solandat"],
+                    };
+                }
+            }
+            return lp;
+        }
+
+        public List<loaiphong> searchLoaiPhongs(string key)
+        {
+            List<loaiphong> loaiphongs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("searchLoaiPhongs");
+                cmd.Parameters.AddWithValue("@key", key);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    loaiphongs = new List<loaiphong>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        loaiphongs.Add(new loaiphong
+                        {
+                            lp_ma = ds.Tables[0].Rows[i]["lp_ma"].ToString(),
+                            lp_ten = ds.Tables[0].Rows[i]["lp_ten"].ToString(),
+                            lp_giaphong = (int)ds.Tables[0].Rows[i]["lp_giaphong"],
+                            lp_soluong = (int)ds.Tables[0].Rows[i]["lp_soluong"],
+                            lp_solandat = (int)ds.Tables[0].Rows[i]["lp_solandat"],
+                        });
+                    }
+                }
+            }
+            return loaiphongs;
+        }
+
+        public bool insertLoaiPhong(loaiphong lp)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("insertLoaiPhong");
+                command.Parameters.AddWithValue("@lp_ma", lp.lp_ma);
+                command.Parameters.AddWithValue("@lp_ten", lp.lp_ten);
+                command.Parameters.AddWithValue("@lp_giaphong", lp.lp_giaphong);
+                command.Parameters.AddWithValue("@lp_soluong", lp.lp_soluong);
+                command.Parameters.AddWithValue("@lp_solandat", lp.lp_solandat);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool updateLoaiPhong(loaiphong lp)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("updateLoaiPhong");
+                command.Parameters.AddWithValue("@lp_ma", lp.lp_ma);
+                command.Parameters.AddWithValue("@lp_ten", lp.lp_ten);
+                command.Parameters.AddWithValue("@lp_giaphong", lp.lp_giaphong);
+                command.Parameters.AddWithValue("@lp_soluong", lp.lp_soluong);
+                command.Parameters.AddWithValue("@lp_solandat", lp.lp_solandat);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+
     }
 }

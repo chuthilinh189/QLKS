@@ -194,6 +194,7 @@
     <Compile Include="Controllers\chucvuController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\nhanvienController.cs" />
+    <Compile Include="Controllers\phongController.cs" />
     <Compile Include="Controllers\quyenController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -202,6 +203,7 @@
     <Compile Include="Models\Connection.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\Helper.cs" />
+    <Compile Include="Models\loaiphong.cs" />
     <Compile Include="Models\nhanvien.cs" />
     <Compile Include="Models\quyen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -265,6 +267,7 @@
     <Folder Include="Views\chucvu\" />
     <Folder Include="Views\Default\" />
     <Folder Include="Views\MainEngine\" />
+    <Folder Include="Views\phong\" />
     <Folder Include="Views\quyen\" />
     <Folder Include="Views\ShipInfo\" />
     <Folder Include="Views\user\" />
