@@ -186,6 +186,10 @@ namespace QLKSAPI.Models
 
         public List<nhanvien> searchNhanviens(string key)
         {
+            if(key == "" || key == null)
+            {
+                return getAllNhanviens();
+            }
             List<nhanvien> nhanviens = null;
             if (IsConnect())
             {
@@ -282,6 +286,36 @@ namespace QLKSAPI.Models
                 command.Parameters.AddWithValue("@nv_matkhau", nv.matkhau);
                 command.Parameters.AddWithValue("@nv_maquyen", nv.quyennv.maquyen);
                 command.Parameters.AddWithValue("@nv_fileanh", nv.fileanh);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool deleteNhanvien(string manv)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("deleteNhanvien");
+                command.Parameters.AddWithValue("@nv_ma", manv);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool changePassword(nhanvien nv, string matkhaumoi)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("changePassword");
+                command.Parameters.AddWithValue("@nv_tdn", nv.tdn);
+                command.Parameters.AddWithValue("@nv_matkhau", nv.matkhau);
+                command.Parameters.AddWithValue("@matkhaumoi", matkhaumoi);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Connection = con;
                 isSuccess = command.ExecuteNonQuery() > 0 ? true : false;

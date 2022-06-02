@@ -47,7 +47,7 @@ namespace DHSLAPI.Controllers
 
         [HttpPost]
         [Route("api/nhanvien_insert")]
-        public HttpResponseMessage InsertUser([FromBody] nhanvien nv)
+        public HttpResponseMessage insertNhanvien([FromBody] nhanvien nv)
         {
             nv.manv = Helper.EnCode(DateTime.Now.ToString("yyyy-mm-dd:hh-mm-ss"));
             nv.matkhau = Helper.EnCode(nv.matkhau);
@@ -56,13 +56,27 @@ namespace DHSLAPI.Controllers
 
         [HttpPut]
         [Route("api/nhanvien_update")]
-        public HttpResponseMessage UpdateUser([FromBody] nhanvien nv)
+        public HttpResponseMessage updateNhanvien([FromBody] nhanvien nv)
         {
             if (nv.matkhau != string.Empty)
                 nv.matkhau = Helper.EnCode(nv.matkhau);
             return con.updateNhanvien(nv) ? Request.CreateResponse(HttpStatusCode.OK, nv) : Request.CreateResponse(HttpStatusCode.NotFound);
         }
 
+        [HttpDelete]
+        [Route("api/nhanvien_delete")]
+        public HttpResponseMessage deleteNhanvien([FromUri] string id)
+        {
+            return con.deleteNhanvien(id) ? Request.CreateResponse(HttpStatusCode.OK, id) : Request.CreateResponse(HttpStatusCode.NotFound);
+        }
 
+        [HttpPost]
+        [Route("api/nhanvien_doimatkhau")]
+        public HttpResponseMessage changePassword([FromUri] string matkhaumoi, [FromBody] nhanvien nv)
+        {
+            matkhaumoi = Helper.EnCode(matkhaumoi);
+            nv.matkhau = Helper.EnCode(nv.matkhau);
+            return con.changePassword(nv, matkhaumoi) ? Request.CreateResponse(HttpStatusCode.Created, nv) : Request.CreateResponse(HttpStatusCode.Conflict);
+        }
     }
 }
