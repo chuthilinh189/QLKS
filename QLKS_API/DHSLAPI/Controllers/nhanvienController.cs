@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace DHSLAPI.Controllers
+namespace QLKSAPI.Controllers
 {
     public class nhanvienController : ApiController
     {
