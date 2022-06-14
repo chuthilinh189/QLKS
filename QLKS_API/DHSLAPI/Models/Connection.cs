@@ -186,6 +186,10 @@ namespace QLKSAPI.Models
 
         public List<nhanvien> searchNhanviens(string key)
         {
+            if(key == "" || key == null)
+            {
+                return getAllNhanviens();
+            }
             List<nhanvien> nhanviens = null;
             if (IsConnect())
             {
@@ -248,8 +252,8 @@ namespace QLKSAPI.Models
                 command.Parameters.AddWithValue("@nv_cmnd", nv.cmnd);
                 command.Parameters.AddWithValue("@nv_diachi", nv.diachi);
                 command.Parameters.AddWithValue("@nv_email", nv.email);
-                command.Parameters.AddWithValue("@nv_khoa", nv.khoa);
-                command.Parameters.AddWithValue("@nv_xoa", nv.xoa);
+                command.Parameters.AddWithValue("@nv_khoa", false);
+                command.Parameters.AddWithValue("@nv_xoa", false);
                 command.Parameters.AddWithValue("@nv_tdn", nv.tdn);
                 command.Parameters.AddWithValue("@nv_matkhau", nv.matkhau);
                 command.Parameters.AddWithValue("@nv_maquyen", nv.quyennv.maquyen);
@@ -282,6 +286,36 @@ namespace QLKSAPI.Models
                 command.Parameters.AddWithValue("@nv_matkhau", nv.matkhau);
                 command.Parameters.AddWithValue("@nv_maquyen", nv.quyennv.maquyen);
                 command.Parameters.AddWithValue("@nv_fileanh", nv.fileanh);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool deleteNhanvien(string manv)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("deleteNhanvien");
+                command.Parameters.AddWithValue("@nv_ma", manv);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool changePassword(nhanvien nv, string matkhaumoi)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("changePassword");
+                command.Parameters.AddWithValue("@nv_tdn", nv.tdn);
+                command.Parameters.AddWithValue("@nv_matkhau", nv.matkhau);
+                command.Parameters.AddWithValue("@matkhaumoi", matkhaumoi);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Connection = con;
                 isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
@@ -626,6 +660,148 @@ namespace QLKSAPI.Models
                 return command.ExecuteNonQuery() > 0 ? true : false;
             }
             return false;
+        }
+        // Trang thiết bị
+        public List<Trangthietbi> getAllTrangthietbis()
+        {
+            List<Trangthietbi> Trangthietbis = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("getAllTrangthietbis");
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    Trangthietbis = new List<Trangthietbi>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        Trangthietbis.Add(new Trangthietbi
+                        {
+                            mattb = ds.Tables[0].Rows[i]["ttb_ma"].ToString(),
+                            tenttb = ds.Tables[0].Rows[i]["ttb_ten"].ToString(),
+                            dongia = (ds.Tables[0].Rows[i]["ttb_dongia"] == null) ? 0 : int.Parse(ds.Tables[0].Rows[i]["ttb_dongia"].ToString()),
+                            donvitinh = ds.Tables[0].Rows[i]["ttb_donvitinh"].ToString(),
+                            soluong = (ds.Tables[0].Rows[i]["ttb_soluong"] == null) ? 0 : int.Parse(ds.Tables[0].Rows[i]["ttb_soluong"].ToString()),
+                            ghichu = ds.Tables[0].Rows[i]["ttb_ghichu"].ToString()
+                        });
+                    }
+                }
+            }
+            return Trangthietbis;
+        }
+        public Trangthietbi getTrangthietbiByMa(string mattb)
+        {
+            Trangthietbi ttb = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("getTrangthietbiByMa");
+                cmd.Parameters.AddWithValue("@mattb", mattb);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    ttb = new Trangthietbi()
+                    {
+                        mattb = ds.Tables[0].Rows[0]["ttb_ma"].ToString(),
+                        tenttb = ds.Tables[0].Rows[0]["ttb_ten"].ToString(),
+                        dongia = (ds.Tables[0].Rows[0]["ttb_dongia"] == null) ? 0 : int.Parse(ds.Tables[0].Rows[0]["ttb_dongia"].ToString()),
+                        donvitinh = ds.Tables[0].Rows[0]["ttb_donvitinh"].ToString(),
+                        soluong = (ds.Tables[0].Rows[0]["ttb_soluong"] == null) ? 0 : int.Parse(ds.Tables[0].Rows[0]["ttb_soluong"].ToString()),
+                        ghichu = ds.Tables[0].Rows[0]["ttb_ghichu"].ToString()
+                    };
+                }
+            }
+            return ttb;
+        }
+        public List<Trangthietbi> searchTrangthietbis(string key)
+        {
+            if (key == "" || key == null)
+            {
+                return getAllTrangthietbis();
+            }
+            List<Trangthietbi> Trangthietbis = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("searchTrangthietbis");
+                cmd.Parameters.AddWithValue("@key", key);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    Trangthietbis = new List<Trangthietbi>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        Trangthietbis.Add(new Trangthietbi
+                        {
+                            mattb = ds.Tables[0].Rows[i]["ttb_ma"].ToString(),
+                            tenttb = ds.Tables[0].Rows[i]["ttb_ten"].ToString(),
+                            dongia = (ds.Tables[0].Rows[i]["ttb_dongia"] == null) ? 0 : int.Parse(ds.Tables[0].Rows[i]["ttb_dongia"].ToString()),
+                            donvitinh = ds.Tables[0].Rows[i]["ttb_donvitinh"].ToString(),
+                            soluong = (ds.Tables[0].Rows[i]["ttb_soluong"] == null) ? 0 : int.Parse(ds.Tables[0].Rows[i]["ttb_soluong"].ToString()),
+                            ghichu = ds.Tables[0].Rows[i]["ttb_ghichu"].ToString()
+                        });
+                    }
+                }
+            }
+            return Trangthietbis;
+        }
+        public bool insertTrangthietbi(Trangthietbi ttb)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("insertTrangthietbi");
+                command.Parameters.AddWithValue("@ttb_ma", ttb.mattb);
+                command.Parameters.AddWithValue("@ttb_ten", ttb.tenttb);
+                command.Parameters.AddWithValue("@ttb_dongia", ttb.dongia);
+                command.Parameters.AddWithValue("@ttb_donvitinh", ttb.donvitinh);
+                command.Parameters.AddWithValue("@ttb_soluong", ttb.soluong);
+                command.Parameters.AddWithValue("@ttb_ghichu", ttb.ghichu);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+        public bool updateTrangthietbi(Trangthietbi ttb)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("updateTrangthietbi");
+                command.Parameters.AddWithValue("@ttb_ma", ttb.mattb);
+                command.Parameters.AddWithValue("@ttb_ten", ttb.tenttb);
+                command.Parameters.AddWithValue("@ttb_dongia", ttb.dongia);
+                command.Parameters.AddWithValue("@ttb_donvitinh", ttb.donvitinh);
+                command.Parameters.AddWithValue("@ttb_soluong", ttb.soluong);
+                command.Parameters.AddWithValue("@ttb_ghichu", ttb.ghichu);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+        public bool deleteTrangthietbi(string mattb)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("deleteTrangthietbi");
+                command.Parameters.AddWithValue("@ttb_ma", mattb);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
         }
     }
 }
