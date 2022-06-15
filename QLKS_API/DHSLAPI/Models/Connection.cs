@@ -499,7 +499,168 @@ namespace QLKSAPI.Models
             }
             return isSuccess;
         }
+        public List<phong> getAllPhongs()
+        {
+            List<phong> phongs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("getAllPhongs");
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    phongs = new List<phong>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        phongs.Add(new phong
+                        {
+                            p_ma = ds.Tables[0].Rows[i]["p_ma"].ToString(),
+                            p_malp = ds.Tables[0].Rows[i]["p_malp"].ToString(),
+                            p_tinhtrang = ds.Tables[0].Rows[i]["p_tinhtrang"].ToString(),
+                            p_sophong = ds.Tables[0].Rows[i]["p_sophong"].ToString(),
+                            p_solandat = (int)ds.Tables[0].Rows[i]["p_solandat"],
 
+                        });
+                    }
+                }
+            }
+            return phongs;
+        }
+        public phong getPhongByMa(string p_ma)
+        {
+            phong p = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("getPhongByMa");
+                cmd.Parameters.AddWithValue("@p_ma", p_ma);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    p = new phong()
+                    {
+                        p_ma = ds.Tables[0].Rows[0]["p_ma"].ToString(),
+                        p_malp = ds.Tables[0].Rows[0]["p_malp"].ToString(),
+                        p_tinhtrang = ds.Tables[0].Rows[0]["p_tinhtrang"].ToString(),
+                        p_sophong = ds.Tables[0].Rows[0]["p_sophong"].ToString(),
+                        p_solandat = (int)ds.Tables[0].Rows[0]["p_solandat"],
+                    };
+                }
+            }
+            return p;
+        }
+
+        public phong getPhongByLoaiPhong(string p_malp)
+        {
+            phong p = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("getPhongByLoaiPhong");
+                cmd.Parameters.AddWithValue("@p_malp", p_malp);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    p = new phong()
+                    {
+                        p_ma = ds.Tables[0].Rows[0]["p_ma"].ToString(),
+                        p_malp = ds.Tables[0].Rows[0]["p_malp"].ToString(),
+                        p_tinhtrang = ds.Tables[0].Rows[0]["p_tinhtrang"].ToString(),
+                        p_sophong = ds.Tables[0].Rows[0]["p_sophong"].ToString(),
+                        p_solandat = (int)ds.Tables[0].Rows[0]["p_solandat"],
+                    };
+                }
+            }
+            return p;
+        }
+        public List<phong> searchPhongs(string key)
+        {
+            List<phong> phongs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("searchPhongs");
+                cmd.Parameters.AddWithValue("@key", key);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                   phongs = new List<phong>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        phongs.Add(new phong
+                        {
+                            p_ma = ds.Tables[0].Rows[i]["p_ma"].ToString(),
+                            p_malp = ds.Tables[0].Rows[i]["p_malp"].ToString(),
+                            p_tinhtrang = ds.Tables[0].Rows[i]["p_tinhtrang"].ToString(),
+                            p_sophong = ds.Tables[0].Rows[i]["p_sophong"].ToString(),
+                            p_solandat = (int)ds.Tables[0].Rows[i]["p_solandat"],
+
+                        });
+                    }
+                }
+            }
+            return phongs;
+        }
+        public bool insertPhong(phong p)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("insertPhong");
+                command.Parameters.AddWithValue("@p_ma", p.p_ma);
+                command.Parameters.AddWithValue("@p_malp", p.p_malp);
+                command.Parameters.AddWithValue("@p_tinhtrang", p.p_tinhtrang);
+                command.Parameters.AddWithValue("@p_sophong", p.p_sophong);
+                command.Parameters.AddWithValue("@p_solandat", p.p_solandat);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool updatePhong(phong p)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("updatePhong");
+                command.Parameters.AddWithValue("@p_ma", p.p_ma);
+                command.Parameters.AddWithValue("@p_malp", p.p_malp);
+                command.Parameters.AddWithValue("@p_tinhtrang", p.p_tinhtrang);
+                command.Parameters.AddWithValue("@p_sophong", p.p_sophong);
+                command.Parameters.AddWithValue("@p_solandat", p.p_solandat);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool deletePhong (string p_ma)
+        {
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("delete from phong where p_ma=@p_ma");
+                command.Connection = con;
+                command.CommandType = CommandType.Text;
+                command.Parameters.AddWithValue("@p_ma", p_ma);
+                return command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return false;
+        }
         // Trang thiết bị
         public List<Trangthietbi> getAllTrangthietbis()
         {

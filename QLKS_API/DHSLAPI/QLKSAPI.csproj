@@ -195,6 +195,7 @@
     <Compile Include="Controllers\DatphongController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\nhanvienController.cs" />
+    <Compile Include="Controllers\loaiphongController.cs" />
     <Compile Include="Controllers\phongController.cs" />
     <Compile Include="Controllers\PhongttbController.cs" />
     <Compile Include="Controllers\quyenController.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Models\Helper.cs" />
     <Compile Include="Models\loaiphong.cs" />
     <Compile Include="Models\nhanvien.cs" />
+    <Compile Include="Models\phong.cs" />
     <Compile Include="Models\Phongttb.cs" />
     <Compile Include="Models\quyen.cs" />
     <Compile Include="Models\Trangthietbi.cs" />

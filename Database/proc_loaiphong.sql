@@ -32,3 +32,16 @@ INSERT INTO loaiphong(lp_ma, lp_ten,lp_giaphong,lp_soluong,lp_solandat)
 VALUES (@lp_ma,@lp_ten,@lp_giaphong,@lp_soluong,@lp_solandat)
 
 GO
+
+CREATE proc [dbo].[updateLoaiPhong]
+@lp_ma varchar(50),
+@lp_ten varchar(50),
+@lp_giaphong int,
+@lp_soluong int,
+@lp_solandat int
+AS
+BEGIN 
+update loaiphong SET lp_ten=@lp_ten, lp_giaphong = @lp_giaphong, lp_soluong=@lp_soluong, lp_solandat=@lp_solandat
+WHERE lp_ma=@lp_ma
+END
+GO
