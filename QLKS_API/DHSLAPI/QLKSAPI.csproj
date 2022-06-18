@@ -191,9 +191,11 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\anhphongController.cs" />
     <Compile Include="Controllers\chucvuController.cs" />
     <Compile Include="Controllers\DatphongController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\khachhangController.cs" />
     <Compile Include="Controllers\nhanvienController.cs" />
     <Compile Include="Controllers\loaiphongController.cs" />
     <Compile Include="Controllers\phongController.cs" />
@@ -203,12 +205,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\anhphong.cs" />
     <Compile Include="Models\chucvu.cs" />
     <Compile Include="Models\Connection.cs" />
     <Compile Include="Models\Ctphongdat.cs" />
     <Compile Include="Models\Datphong.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\Helper.cs" />
+    <Compile Include="Models\khachhang.cs" />
     <Compile Include="Models\loaiphong.cs" />
     <Compile Include="Models\nhanvien.cs" />
     <Compile Include="Models\phong.cs" />
@@ -273,9 +277,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\anhphong\" />
     <Folder Include="Views\chucvu\" />
     <Folder Include="Views\Datphong\" />
     <Folder Include="Views\Default\" />
+    <Folder Include="Views\khachhang\" />
     <Folder Include="Views\MainEngine\" />
     <Folder Include="Views\Phongttb\" />
     <Folder Include="Views\phong\" />
