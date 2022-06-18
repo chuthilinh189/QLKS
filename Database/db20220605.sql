@@ -98,6 +98,13 @@ GO
 ALTER TABLE phong_ttb ADD ttbp_ghichu nvarchar(200)
 GO
 
+CREATE proc [dbo].[getAllPhongttbs]
+as
+SELECT * FROM phong_ttb 
+LEFT JOIN trangthietbi ON phong_ttb.ttbp_mattb = trangthietbi.ttb_ma
+WHERE phong_ttb.ttbp_maphong = @p_ma
+GO
+
 CREATE proc [dbo].[getAllPhongttb_by_phong]
 @p_ma varchar(50)
 as
