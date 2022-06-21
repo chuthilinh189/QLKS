@@ -713,7 +713,234 @@ namespace QLKSAPI.Models
             return isSuccess;
         }
 
+        // Đăng ký
+        public List<DangKy> DangKySelectAll()
+        {
+            List<DangKy> dangKys = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblDangKy_SelectAll");
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    dangKys = new List<DangKy>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        DangKy dk = new DangKy();
+                        dk.MaDK = ds.Tables[0].Rows[0]["MaDK"].ToString();
+                        dk.KhachHangDK = new KhachHang();
+                        dk.KhachHangDK.MaKhach = ds.Tables[0].Rows[0]["MaKhach"].ToString();
+                        dk.KhachHangDK.HoDem = ds.Tables[0].Rows[0]["HoDem"].ToString();
+                        dk.KhachHangDK.Ten = ds.Tables[0].Rows[0]["Ten"].ToString();
+                        dk.KhachHangDK.NgaySinh = (DateTime)ds.Tables[0].Rows[0]["NgaySinh"];
+                        dk.KhachHangDK.CMND = ds.Tables[0].Rows[0]["CMND"].ToString();
+                        dk.KhachHangDK.QuocTich = ds.Tables[0].Rows[0]["QuocTich"].ToString();
+                        dk.KhachHangDK.GhiChu = ds.Tables[0].Rows[0]["GhiChu"].ToString();
+                        dk.TienDat = (int)ds.Tables[0].Rows[0]["TienDat"];
+                        dk.SoNguoi = (int)ds.Tables[0].Rows[0]["SoNguoi"];
+                        dk.GhiChu = ds.Tables[0].Rows[0]["NgiChu"].ToString();
+                        dk.PhongDK = new Phong();
+                        dk.PhongDK.MaPhong = ds.Tables[0].Rows[0]["MaPhong"].ToString();
+                        dk.PhongDK.TenPhong = ds.Tables[0].Rows[0]["TenPhong"].ToString();
+                        dk.PhongDK.LoaiPhong = ds.Tables[0].Rows[0]["LoaiPhong"].ToString();
+                        dk.PhongDK.Gia = (int)ds.Tables[0].Rows[0]["Gia"];
+                        dangKys.Add(dk);
+                    }
+                }
+            }
+            return dangKys;
+        }
+        public List<DangKy> DangKySelectTop(string Top, string Where, string Order)
+        {
+            List<DangKy> dangKys = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblDangKy_SelectTop");
+                cmd.Parameters.AddWithValue("@Top", Top);
+                cmd.Parameters.AddWithValue("@Where", Where);
+                cmd.Parameters.AddWithValue("@Order", Order);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    dangKys = new List<DangKy>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        DangKy dk = new DangKy();
+                        dk.MaDK = ds.Tables[0].Rows[0]["MaDK"].ToString();
+                        dk.KhachHangDK = new KhachHang();
+                        dk.KhachHangDK.MaKhach = ds.Tables[0].Rows[0]["MaKhach"].ToString();
+                        dk.KhachHangDK.HoDem = ds.Tables[0].Rows[0]["HoDem"].ToString();
+                        dk.KhachHangDK.Ten = ds.Tables[0].Rows[0]["Ten"].ToString();
+                        dk.KhachHangDK.NgaySinh = (DateTime)ds.Tables[0].Rows[0]["NgaySinh"];
+                        dk.KhachHangDK.CMND = ds.Tables[0].Rows[0]["CMND"].ToString();
+                        dk.KhachHangDK.QuocTich = ds.Tables[0].Rows[0]["QuocTich"].ToString();
+                        dk.KhachHangDK.GhiChu = ds.Tables[0].Rows[0]["GhiChu"].ToString();
+                        dk.TienDat = (int)ds.Tables[0].Rows[0]["TienDat"];
+                        dk.SoNguoi = (int)ds.Tables[0].Rows[0]["SoNguoi"];
+                        dk.GhiChu = ds.Tables[0].Rows[0]["NgiChu"].ToString();
+                        dk.PhongDK = new Phong();
+                        dk.PhongDK.MaPhong = ds.Tables[0].Rows[0]["MaPhong"].ToString();
+                        dk.PhongDK.TenPhong = ds.Tables[0].Rows[0]["TenPhong"].ToString();
+                        dk.PhongDK.LoaiPhong = ds.Tables[0].Rows[0]["LoaiPhong"].ToString();
+                        dk.PhongDK.Gia = (int)ds.Tables[0].Rows[0]["Gia"];
+                        dangKys.Add(dk);
+                    }
+                }
+            }
+            return dangKys;
+        }
+
+        public DangKy DangKySelectByID(string MaDK)
+        {
+            DangKy dangKys = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblDangKy_SelectByID");
+                cmd.Parameters.AddWithValue("@MaDK", MaDK);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    dangKys = new DangKy();
+                    dangKys.MaDK = ds.Tables[0].Rows[0]["MaDK"].ToString();
+                    dangKys.KhachHangDK = new KhachHang();
+                    dangKys.KhachHangDK.MaKhach = ds.Tables[0].Rows[0]["MaKhach"].ToString();
+                    dangKys.KhachHangDK.HoDem = ds.Tables[0].Rows[0]["HoDem"].ToString();
+                    dangKys.KhachHangDK.Ten = ds.Tables[0].Rows[0]["Ten"].ToString();
+                    dangKys.KhachHangDK.NgaySinh = (DateTime)ds.Tables[0].Rows[0]["NgaySinh"];
+                    dangKys.KhachHangDK.CMND = ds.Tables[0].Rows[0]["CMND"].ToString();
+                    dangKys.KhachHangDK.QuocTich = ds.Tables[0].Rows[0]["QuocTich"].ToString();
+                    dangKys.KhachHangDK.GhiChu = ds.Tables[0].Rows[0]["GhiChu"].ToString();
+                    dangKys.TienDat = (int)ds.Tables[0].Rows[0]["TienDat"];
+                    dangKys.SoNguoi = (int)ds.Tables[0].Rows[0]["SoNguoi"];
+                    dangKys.GhiChu = ds.Tables[0].Rows[0]["NgiChu"].ToString();
+                    dangKys.PhongDK = new Phong();
+                    dangKys.PhongDK.MaPhong = ds.Tables[0].Rows[0]["MaPhong"].ToString();
+                    dangKys.PhongDK.TenPhong = ds.Tables[0].Rows[0]["TenPhong"].ToString();
+                    dangKys.PhongDK.LoaiPhong = ds.Tables[0].Rows[0]["LoaiPhong"].ToString();
+                    dangKys.PhongDK.Gia = (int)ds.Tables[0].Rows[0]["Gia"];
+                    //{
+                    //    MaDK = ds.Tables[0].Rows[0]["MaDK"].ToString(),
+                    //    //NgayDangKy = DateTime.Parse(ds.Tables[0].Rows[i]["NgayDangKy"].ToString()),
+                    //    //NgayDen = ds.Tables[0].Rows[i]["NgayDen"] != null ? DateTime.Parse(ds.Tables[0].Rows[i]["NgayDen"].ToString()) : null,
+                    //    //NgayDi = ds.Tables[0].Rows[i]["NgayDi"] != null ? DateTime.Parse(ds.Tables[0].Rows[i]["NgayDi"].ToString()) : null,
+                    //    TienDat = (int)ds.Tables[0].Rows[0]["TienDat"],
+                    //    SoNguoi = (int)ds.Tables[0].Rows[0]["SoNguoi"],
+                    //    GhiChu = ds.Tables[0].Rows[0]["NgiChu"].ToString(),
+                    //    KhachHangDK =
+                    //    {
+                    //        MaKhach = ds.Tables[0].Rows[0]["MaKhach"].ToString(),
+                    //        HoDem = ds.Tables[0].Rows[0]["HoDem"].ToString(),
+                    //        Ten = ds.Tables[0].Rows[0]["Ten"].ToString(),
+                    //        NgaySinh = (DateTime)ds.Tables[0].Rows[0]["NgaySinh"],
+                    //        CMND = ds.Tables[0].Rows[0]["CMND"].ToString(),
+                    //        QuocTich = ds.Tables[0].Rows[0]["QuocTich"].ToString(),
+                    //        GhiChu = ds.Tables[0].Rows[0]["GhiChu"].ToString(),
+                    //    },
+                    //    PhongDK =
+                    //    {
+                    //        MaPhong = ds.Tables[0].Rows[0]["MaPhong"].ToString(),
+                    //        TenPhong = ds.Tables[0].Rows[0]["TenPhong"].ToString(),
+                    //        LoaiPhong = ds.Tables[0].Rows[0]["LoaiPhong"].ToString(),
+                    //        Gia = (int)ds.Tables[0].Rows[0]["Gia"],
+                    //    }
+                    //};
+
+                }
+            }
+            return dangKys;
+        }
+
+        //public bool DangKyTestByID(string MaCV)
+        //{
+        //    bool b = false;
+        //    if (IsConnect())
+        //    {
+        //        SqlCommand cmd = new SqlCommand("tblDangKy_TestByID");
+        //        cmd.Parameters.AddWithValue("@MaCV", MaCV);
+        //        cmd.Connection = con;
+        //        cmd.CommandType = CommandType.StoredProcedure;
+        //        DataSet ds = new DataSet();
+        //        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+        //        adapter.Fill(ds);
+        //        if (ds.Tables[0].Rows.Count > 0)
+        //        {
+        //            b = Convert.ToBoolean(ds.Tables[1].Rows[0]["TestID"].ToString());
+        //        }
+        //    }
+        //    return b;
+        //}
+
+        public bool DangKyInsert(DangKy dk)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblDangKy_Insert");
+                command.Parameters.AddWithValue("@MaDK", dk.MaDK);
+                command.Parameters.AddWithValue("@MaKhach", dk.KhachHangDK.MaKhach);
+                command.Parameters.AddWithValue("@MaPhong", dk.PhongDK.MaPhong);
+                command.Parameters.AddWithValue("@NgayDangKy", dk.NgayDangKy);
+                command.Parameters.AddWithValue("@NgayDen", dk.NgayDen);
+                command.Parameters.AddWithValue("@NgayDi", dk.NgayDi);
+                command.Parameters.AddWithValue("@TienDat", dk.TienDat);
+                command.Parameters.AddWithValue("@SoNguoi", dk.SoNguoi);
+                command.Parameters.AddWithValue("@NgiChu", dk.GhiChu);
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool DangKyUpdate(DangKy dk)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblDangKy_Update");
+                command.Parameters.AddWithValue("@MaDK", dk.MaDK);
+                command.Parameters.AddWithValue("@MaKhach", dk.KhachHangDK.MaKhach);
+                command.Parameters.AddWithValue("@MaPhong", dk.PhongDK.MaPhong);
+                command.Parameters.AddWithValue("@NgayDangKy", dk.NgayDangKy);
+                command.Parameters.AddWithValue("@NgayDen", dk.NgayDen);
+                command.Parameters.AddWithValue("@NgayDi", dk.NgayDi);
+                command.Parameters.AddWithValue("@TienDat", dk.TienDat);
+                command.Parameters.AddWithValue("@SoNguoi", dk.SoNguoi);
+                command.Parameters.AddWithValue("@NgiChu", dk.GhiChu);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool DangKyDelete(string MaDK)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblDangKy_Delete");
+                command.Parameters.AddWithValue("@MaDK", MaDK);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
     }
+
 
 
 
