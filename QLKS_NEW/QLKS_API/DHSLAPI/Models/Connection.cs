@@ -207,6 +207,17 @@ namespace QLKSAPI.Models
                     CMND = ds.Tables[0].Rows[0]["CMND"].ToString(),
                     GhiChu = ds.Tables[0].Rows[0]["NghiChu"].ToString(),
                     MatKhau = ds.Tables[0].Rows[0]["MatKhau"].ToString(),
+                    ChucVuNV = new ChucVu()
+                    {
+                        MaCV = ds.Tables[0].Rows[0]["MaCV"].ToString(),
+                        Khu = int.Parse(ds.Tables[0].Rows[0]["Khu"].ToString()),
+                        TenDonVi = ds.Tables[0].Rows[0]["TenDonVi"].ToString(),
+                        TenChucVu = ds.Tables[0].Rows[0]["ChucVu"].ToString()
+                    }
+                };
+            }
+            return nv;
+        }
 
         // Chức vụ
         public List<ChucVu> ChucVuSelectAll()
@@ -367,6 +378,10 @@ namespace QLKSAPI.Models
             }
             return isSuccess;
         }
+    }
+            
+
+
 
         //public nhanvien Login(string tdn, string matkhau)
         //{
@@ -642,5 +657,5 @@ namespace QLKSAPI.Models
         //    return isSuccess;
         //}
 
-    }
+    
 }
