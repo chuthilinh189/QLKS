@@ -88,6 +88,125 @@ namespace QLKSAPI.Models
             }
             return nhanViens;
         }
+        public List<NhanVien> SelectAll()
+        {
+            List<NhanVien> nhanViens = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblNhanVien_SelectAll");
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    nhanViens = new List<NhanVien>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        nhanViens.Add(new NhanVien
+                        {
+                            MaNV = ds.Tables[0].Rows[i]["MaNV"].ToString(),
+                            HoDem = ds.Tables[0].Rows[i]["HoDem"].ToString(),
+                            Ten = ds.Tables[0].Rows[i]["Ten"].ToString(),
+                            NgaySinh = DateTime.Parse(ds.Tables[0].Rows[i]["NgaySinh"].ToString()),
+                            CMND = ds.Tables[0].Rows[i]["CMND"].ToString(),
+                            GhiChu = ds.Tables[0].Rows[i]["NghiChu"].ToString(),
+                            MatKhau = ds.Tables[0].Rows[i]["MatKhau"].ToString(),
+                            ChucVuNV = new ChucVu()
+                            {
+                                MaCV = ds.Tables[0].Rows[i]["MaCV"].ToString(),
+                                Khu = int.Parse(ds.Tables[0].Rows[i]["Khu"].ToString()),
+                                TenDonVi = ds.Tables[0].Rows[i]["TenDonVi"].ToString(),
+                                TenChucVu = ds.Tables[0].Rows[i]["ChucVu"].ToString()
+                            }
+                        });
+                    }
+                }
+            }
+            return nhanViens;
+        }
+
+        public bool InsertNhanvien(NhanVien nv)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblNhanVien_Insert");
+                command.Parameters.AddWithValue("@MaNV", nv.MaNV);
+                command.Parameters.AddWithValue("@MaCV", nv.ChucVuNV.MaCV);
+                command.Parameters.AddWithValue("@HoDem", nv.HoDem);
+                command.Parameters.AddWithValue("@Ten", nv.Ten);
+                command.Parameters.AddWithValue("@NgaySinh", nv.NgaySinh);
+                command.Parameters.AddWithValue("@CMND", nv.CMND);
+                command.Parameters.AddWithValue("@NghiChu", nv.GhiChu);
+                command.Parameters.AddWithValue("@MatKhau", nv.MatKhau);
+                
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool DeleteNhanvien(string manv)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblNhanVien_Delete");
+                command.Parameters.AddWithValue("@MaNV", manv);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool UpdateNhanvien(NhanVien nv)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblNhanVien_Update");
+                command.Parameters.AddWithValue("@MaNV", nv.MaNV);
+                command.Parameters.AddWithValue("@MaCV", nv.ChucVuNV.MaCV);
+                command.Parameters.AddWithValue("@HoDem", nv.HoDem);
+                command.Parameters.AddWithValue("@Ten", nv.Ten);
+                command.Parameters.AddWithValue("@NgaySinh", nv.NgaySinh);
+                command.Parameters.AddWithValue("@CMND ", nv.CMND);
+                command.Parameters.AddWithValue("@NghiChu", nv.GhiChu);
+                command.Parameters.AddWithValue("@MatKhau", nv.MatKhau);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public NhanVien Login(string tdn, string matkhau)
+        {
+            NhanVien nv = null;
+            SqlCommand cmd = new SqlCommand("tblNhanVien_Login");
+            cmd.Connection = con;
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@MaNV", tdn);
+            cmd.Parameters.AddWithValue("@MatKhau", matkhau);
+            DataSet ds = new DataSet();
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            adapter.Fill(ds);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                nv = new NhanVien()
+                {
+                    MaNV = ds.Tables[0].Rows[0]["MaNV"].ToString(),
+                    HoDem = ds.Tables[0].Rows[0]["HoDem"].ToString(),
+                    Ten = ds.Tables[0].Rows[0]["Ten"].ToString(),
+                    NgaySinh = DateTime.Parse(ds.Tables[0].Rows[0]["NgaySinh"].ToString()),
+                    CMND = ds.Tables[0].Rows[0]["CMND"].ToString(),
+                    GhiChu = ds.Tables[0].Rows[0]["NghiChu"].ToString(),
+                    MatKhau = ds.Tables[0].Rows[0]["MatKhau"].ToString(),
 
         // Chức vụ
         public List<ChucVu> ChucVuSelectAll()

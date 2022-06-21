@@ -24,14 +24,47 @@ namespace QLKSAPI.Controllers
         {
             return con.SelectAllByID(MaNV);
         }
+        [HttpGet]
+        [Route("api/NhanVienAll")]
+        public List<NhanVien> SelectAll()
+        {
+            return con.SelectAll();
+        }
 
-        //[HttpPost]
-        //[Route("api/nhanvien_login")]
-        //public nhanvien Login([FromBody] nhanvien nv)
-        //{
-        //    nv.matkhau = Helper.EnCode(nv.matkhau);
-        //    return con.Login(nv.tdn, nv.matkhau);
-        //}
+        [HttpPost]
+        [Route("api/NhanVienInsert")]
+        public HttpResponseMessage InsertNhanvien([FromBody] NhanVien nv)
+        {
+            //nv.MaNV = Helper.EnCode(DateTime.Now.ToString("yyyy-mm-dd:hh-mm-ss"));
+           
+            nv.MatKhau = Helper.EnCode(nv.MatKhau);
+            return con.InsertNhanvien(nv) ? Request.CreateResponse(HttpStatusCode.Created, nv) : Request.CreateResponse(HttpStatusCode.Conflict);
+        }
+
+        [HttpDelete]
+        [Route("api/NhanVienDelete")]
+        public HttpResponseMessage DeleteNhanvien([FromUri] string id)
+        {
+            return con.DeleteNhanvien(id) ? Request.CreateResponse(HttpStatusCode.OK, id) : Request.CreateResponse(HttpStatusCode.NotFound);
+        }
+
+        [HttpPut]
+        [Route("api/NhanVienUpdate")]
+        public HttpResponseMessage UpdateNhanvien([FromBody] NhanVien nv)
+        {
+            if (nv.MatKhau != string.Empty)
+                nv.MatKhau = Helper.EnCode(nv.MatKhau);
+            return con.UpdateNhanvien(nv) ? Request.CreateResponse(HttpStatusCode.OK, nv) : Request.CreateResponse(HttpStatusCode.NotFound);
+        }
+
+
+        [HttpPost]
+        [Route("api/NhanVienLogin")]
+        public NhanVien Login([FromBody] NhanVien nv)
+        {
+            nv.MatKhau = Helper.EnCode(nv.MatKhau);
+            return con.Login(nv.MaNV, nv.MatKhau);
+        }
 
         //[HttpGet]
         //[Route("api/nhanviens")]
