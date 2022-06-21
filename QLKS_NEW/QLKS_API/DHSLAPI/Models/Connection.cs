@@ -378,284 +378,619 @@ namespace QLKSAPI.Models
             }
             return isSuccess;
         }
+        public List<Phong> SelectAllPhong()
+        {
+            List<Phong> phongs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblPhong_SelectAll");
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    phongs = new List<Phong>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        phongs.Add(new Phong
+                        {
+                            MaPhong = ds.Tables[0].Rows[i]["MaPhong"].ToString(),
+                            TenPhong = ds.Tables[0].Rows[i]["TenPhong"].ToString(),
+                            LoaiPhong = ds.Tables[0].Rows[i]["LoaiPhong"].ToString(),
+                            Gia = (int)ds.Tables[0].Rows[i]["Gia"],
+                        });
+                    }
+                }
+            }
+            return phongs;
+        }
+
+        public Phong SelectPhongById(string MaPhong)
+        {
+            Phong p = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblPhong_SelectByID");
+                cmd.Parameters.AddWithValue("@MaPhong", MaPhong);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    p = new Phong()
+
+                    {
+                        MaPhong = ds.Tables[0].Rows[0]["MaPhong"].ToString(),
+                        TenPhong = ds.Tables[0].Rows[0]["TenPhong"].ToString(),
+                        LoaiPhong = ds.Tables[0].Rows[0]["LoaiPhong"].ToString(),
+                        Gia = (int)ds.Tables[0].Rows[0]["Gia"],
+                    };
+
+                }
+            }
+            return p;
+        }
+        public bool insertPhong(Phong p)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblPhong_Insert");
+                command.Parameters.AddWithValue("@MaPhong", p.MaPhong);
+                command.Parameters.AddWithValue("@TenPhong", p.TenPhong);
+                command.Parameters.AddWithValue("@LoaiPhong", p.LoaiPhong);
+                command.Parameters.AddWithValue("@Gia", p.Gia);
+
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool updatePhong(Phong p)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblPhong_Update");
+                command.Parameters.AddWithValue("@MaPhong", p.MaPhong);
+                command.Parameters.AddWithValue("@TenPhong", p.TenPhong);
+                command.Parameters.AddWithValue("@LoaiPhong", p.LoaiPhong);
+                command.Parameters.AddWithValue("@Gia", p.Gia);
+
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool deletePhong(string MaPhong)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblPhong_Delete");
+                command.Parameters.AddWithValue("@MaPhong", MaPhong);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public List<KhachHang> SelectAllKhachHang()
+        {
+            List<KhachHang> khachHangs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblKhachHang_SelectAll");
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    khachHangs = new List<KhachHang>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        khachHangs.Add(new KhachHang
+                        {
+                            MaKhach = ds.Tables[0].Rows[i]["MaKhach"].ToString(),
+                            HoDem = ds.Tables[0].Rows[i]["HoDem"].ToString(),
+                            Ten = ds.Tables[0].Rows[i]["Ten"].ToString(),
+                            NgaySinh = (DateTime)ds.Tables[0].Rows[i]["NgaySinh"],
+                            CMND = ds.Tables[0].Rows[i]["CMND"].ToString(),
+                            QuocTich = ds.Tables[0].Rows[i]["QuocTich"].ToString(),
+                            GhiChu = ds.Tables[0].Rows[i]["GhiChu"].ToString(),
+                        });
+                    }
+                }
+            }
+            return khachHangs;
+        }
+
+        public KhachHang SelectKhachHangById(string MaKhach)
+        {
+            KhachHang kh = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblKhachHang_SelectByID");
+                cmd.Parameters.AddWithValue("@MaKhach", MaKhach);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    kh = new KhachHang()
+
+                    {
+                        MaKhach = ds.Tables[0].Rows[0]["MaKhach"].ToString(),
+                        HoDem = ds.Tables[0].Rows[0]["HoDem"].ToString(),
+                        Ten = ds.Tables[0].Rows[0]["Ten"].ToString(),
+                        NgaySinh = (DateTime)ds.Tables[0].Rows[0]["NgaySinh"],
+                        CMND = ds.Tables[0].Rows[0]["CMND"].ToString(),
+                        QuocTich = ds.Tables[0].Rows[0]["QuocTich"].ToString(),
+                        GhiChu = ds.Tables[0].Rows[0]["GhiChu"].ToString(),
+                    };
+
+                }
+            }
+            return kh;
+        }
+        public bool insertKhachHang(KhachHang kh)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblKhachHang_Insert");
+                command.Parameters.AddWithValue("@MaKhach", kh.MaKhach);
+                command.Parameters.AddWithValue("@HoDem", kh.HoDem);
+                command.Parameters.AddWithValue("@Ten", kh.Ten);
+                command.Parameters.AddWithValue("@NgaySinh", kh.NgaySinh);
+                command.Parameters.AddWithValue("@CMND", kh.CMND);
+                command.Parameters.AddWithValue("@QuocTich", kh.QuocTich);
+                command.Parameters.AddWithValue("@GhiChu", kh.GhiChu);
+
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool updateKhachHang(KhachHang kh)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblKhachHang_Update");
+                command.Parameters.AddWithValue("@MaKhach", kh.MaKhach);
+                command.Parameters.AddWithValue("@HoDem", kh.HoDem);
+                command.Parameters.AddWithValue("@Ten", kh.Ten);
+                command.Parameters.AddWithValue("@NgaySinh", kh.NgaySinh);
+                command.Parameters.AddWithValue("@CMND", kh.CMND);
+                command.Parameters.AddWithValue("@QuocTich", kh.QuocTich);
+                command.Parameters.AddWithValue("@GhiChu", kh.GhiChu);
+
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool deleteKhachHang(string MaKhach)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblKhachHang_Delete");
+                command.Parameters.AddWithValue("@MaKhach", MaKhach);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public List<DichVu> SelectAllDichVu()
+        {
+            List<DichVu> dichVus = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblDichVu_SelectAll");
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    dichVus = new List<DichVu>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        dichVus.Add(new DichVu
+                        {
+                            MaDV = ds.Tables[0].Rows[i]["MaDV"].ToString(),
+                            TenDV = ds.Tables[0].Rows[i]["TenDV"].ToString(),
+                            GiaTien = (int)ds.Tables[0].Rows[i]["GiaTien"],
+                        });
+                    }
+                }
+            }
+            return dichVus;
+        }
+
+        public DichVu SelectDichVuById(string MaDV)
+        {
+            DichVu dv = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblDichVu_SelectByID");
+                cmd.Parameters.AddWithValue("@MaDV", MaDV);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    dv = new DichVu()
+
+                    {
+                        MaDV = ds.Tables[0].Rows[0]["MaDV"].ToString(),
+                        TenDV = ds.Tables[0].Rows[0]["TenDV"].ToString(),
+                        GiaTien = (int)ds.Tables[0].Rows[0]["GiaTien"],
+                    };
+
+                }
+            }
+            return dv;
+        }
+        public bool insertDichVu(DichVu dv)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblDichVu_Insert");
+                command.Parameters.AddWithValue("@MaDV", dv.MaDV);
+                command.Parameters.AddWithValue("@TenDV", dv.TenDV);
+                command.Parameters.AddWithValue("@GiaTien", dv.GiaTien);
+
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool updateDichVu(DichVu dv)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblDichVu_Update");
+                command.Parameters.AddWithValue("@MaDV", dv.MaDV);
+                command.Parameters.AddWithValue("@TenDV", dv.TenDV);
+                command.Parameters.AddWithValue("@GiaTien", dv.GiaTien);
+
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool deleteDichVu(string MaDV)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblDichVu_Delete");
+                command.Parameters.AddWithValue("@MaDV", MaDV);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
     }
-            
 
 
 
-        //public nhanvien Login(string tdn, string matkhau)
-        //{
-        //    nhanvien nv = null;
-        //    SqlCommand cmd = new SqlCommand("Login");
-        //    cmd.Connection = con;
-        //    cmd.CommandType = CommandType.StoredProcedure;
-        //    cmd.Parameters.AddWithValue("@tdn", tdn);
-        //    cmd.Parameters.AddWithValue("@matkhau", matkhau);
-        //    DataSet ds = new DataSet();
-        //    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-        //    adapter.Fill(ds);
-        //    if (ds.Tables[0].Rows.Count > 0)
-        //    {
-        //        nv = new nhanvien()
-        //        {
-        //            manv = ds.Tables[0].Rows[0]["nv_ma"].ToString(),
-        //            tdn = ds.Tables[0].Rows[0]["nv_tdn"].ToString(),
-        //            matkhau = ds.Tables[0].Rows[0]["nv_matkhau"].ToString(),
-        //            hoten = ds.Tables[0].Rows[0]["nv_hoten"].ToString(),
-        //            ngaysinh = ds.Tables[0].Rows[0]["nv_ngaysinh"].ToString(),
-        //            gioitinh = (bool)ds.Tables[0].Rows[0]["nv_gioitinh"],
-        //            sdt = ds.Tables[0].Rows[0]["nv_sdt"].ToString(),
-        //            cmnd = ds.Tables[0].Rows[0]["nv_cmnd"].ToString(),
-        //            diachi = ds.Tables[0].Rows[0]["nv_diachi"].ToString(),
-        //            email = ds.Tables[0].Rows[0]["nv_email"].ToString(),
-        //            khoa = (bool)ds.Tables[0].Rows[0]["nv_khoa"],
-        //            xoa = (bool)ds.Tables[0].Rows[0]["nv_xoa"],
-        //            fileanh = ds.Tables[0].Rows[0]["nv_fileanh"].ToString(),
-        //            chucVu = new chucvu()
-        //            {
-        //                macv = ds.Tables[0].Rows[0]["cv_ma"].ToString(),
-        //                tencv = ds.Tables[0].Rows[0]["cv_ten"].ToString()
-        //            },
-        //            quyennv = new quyen()
-        //            {
-        //                maquyen = ds.Tables[0].Rows[0]["q_ma"].ToString(),
-        //                tenquyen = ds.Tables[0].Rows[0]["q_ten"].ToString(),
-        //            }
-        //        };
-        //    }
-        //    return nv;
-        //}
 
-        //public List<nhanvien> getAllNhanviens()
-        //{
-        //    List<nhanvien> nhanviens = null;
-        //    if (IsConnect())
-        //    {
-        //        SqlCommand cmd = new SqlCommand("getAllNhanviens");
-        //        cmd.Connection = con;
-        //        cmd.CommandType = CommandType.StoredProcedure;
-        //        DataSet ds = new DataSet();
-        //        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-        //        adapter.Fill(ds);
-        //        if (ds.Tables[0].Rows.Count > 0)
-        //        {
-        //            nhanviens = new List<nhanvien>();
-        //            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-        //            {
-        //                nhanviens.Add(new nhanvien {
-        //                    manv = ds.Tables[0].Rows[i]["nv_ma"].ToString(),
-        //                    tdn = ds.Tables[0].Rows[i]["nv_tdn"].ToString(),
-        //                    matkhau = ds.Tables[0].Rows[i]["nv_matkhau"].ToString(),
-        //                    hoten = ds.Tables[0].Rows[i]["nv_hoten"].ToString(),
-        //                    ngaysinh = ds.Tables[0].Rows[i]["nv_ngaysinh"].ToString(),
-        //                    gioitinh = (bool)ds.Tables[0].Rows[i]["nv_gioitinh"],
-        //                    sdt = ds.Tables[0].Rows[i]["nv_sdt"].ToString(),
-        //                    cmnd = ds.Tables[0].Rows[i]["nv_cmnd"].ToString(),
-        //                    diachi = ds.Tables[0].Rows[i]["nv_diachi"].ToString(),
-        //                    email = ds.Tables[0].Rows[i]["nv_email"].ToString(),
-        //                    khoa = (bool)ds.Tables[0].Rows[i]["nv_khoa"],
-        //                    xoa = (bool)ds.Tables[0].Rows[i]["nv_xoa"],
-        //                    fileanh = ds.Tables[0].Rows[i]["nv_fileanh"].ToString(),
-        //                    chucVu = new chucvu()
-        //                    {
-        //                        macv = ds.Tables[0].Rows[i]["cv_ma"].ToString(),
-        //                        tencv = ds.Tables[0].Rows[i]["cv_ten"].ToString()
-        //                    },
-        //                    quyennv = new quyen()
-        //                    {
-        //                        maquyen = ds.Tables[0].Rows[i]["q_ma"].ToString(),
-        //                        tenquyen = ds.Tables[0].Rows[i]["q_ten"].ToString(),
-        //                    }
-        //                });
-        //            }
-        //        }
-        //    }
-        //    return nhanviens;
-        //}
+    //public nhanvien Login(string tdn, string matkhau)
+    //{
+    //    nhanvien nv = null;
+    //    SqlCommand cmd = new SqlCommand("Login");
+    //    cmd.Connection = con;
+    //    cmd.CommandType = CommandType.StoredProcedure;
+    //    cmd.Parameters.AddWithValue("@tdn", tdn);
+    //    cmd.Parameters.AddWithValue("@matkhau", matkhau);
+    //    DataSet ds = new DataSet();
+    //    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+    //    adapter.Fill(ds);
+    //    if (ds.Tables[0].Rows.Count > 0)
+    //    {
+    //        nv = new nhanvien()
+    //        {
+    //            manv = ds.Tables[0].Rows[0]["nv_ma"].ToString(),
+    //            tdn = ds.Tables[0].Rows[0]["nv_tdn"].ToString(),
+    //            matkhau = ds.Tables[0].Rows[0]["nv_matkhau"].ToString(),
+    //            hoten = ds.Tables[0].Rows[0]["nv_hoten"].ToString(),
+    //            ngaysinh = ds.Tables[0].Rows[0]["nv_ngaysinh"].ToString(),
+    //            gioitinh = (bool)ds.Tables[0].Rows[0]["nv_gioitinh"],
+    //            sdt = ds.Tables[0].Rows[0]["nv_sdt"].ToString(),
+    //            cmnd = ds.Tables[0].Rows[0]["nv_cmnd"].ToString(),
+    //            diachi = ds.Tables[0].Rows[0]["nv_diachi"].ToString(),
+    //            email = ds.Tables[0].Rows[0]["nv_email"].ToString(),
+    //            khoa = (bool)ds.Tables[0].Rows[0]["nv_khoa"],
+    //            xoa = (bool)ds.Tables[0].Rows[0]["nv_xoa"],
+    //            fileanh = ds.Tables[0].Rows[0]["nv_fileanh"].ToString(),
+    //            chucVu = new chucvu()
+    //            {
+    //                macv = ds.Tables[0].Rows[0]["cv_ma"].ToString(),
+    //                tencv = ds.Tables[0].Rows[0]["cv_ten"].ToString()
+    //            },
+    //            quyennv = new quyen()
+    //            {
+    //                maquyen = ds.Tables[0].Rows[0]["q_ma"].ToString(),
+    //                tenquyen = ds.Tables[0].Rows[0]["q_ten"].ToString(),
+    //            }
+    //        };
+    //    }
+    //    return nv;
+    //}
 
-        //public nhanvien getNhanvienByMa(string manv)
-        //{
-        //    nhanvien nv = null;
-        //    if (IsConnect())
-        //    {
-        //        SqlCommand cmd = new SqlCommand("getNhanvienByMa");
-        //        cmd.Parameters.AddWithValue("@manv", manv);
-        //        cmd.Connection = con;
-        //        cmd.CommandType = CommandType.StoredProcedure;
-        //        DataSet ds = new DataSet();
-        //        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-        //        adapter.Fill(ds);
-        //        if (ds.Tables[0].Rows.Count > 0)
-        //        {
-        //            nv = new nhanvien()
-        //            {
-        //                manv = ds.Tables[0].Rows[0]["nv_ma"].ToString(),
-        //                tdn = ds.Tables[0].Rows[0]["nv_tdn"].ToString(),
-        //                matkhau = ds.Tables[0].Rows[0]["nv_matkhau"].ToString(),
-        //                hoten = ds.Tables[0].Rows[0]["nv_hoten"].ToString(),
-        //                ngaysinh = ds.Tables[0].Rows[0]["nv_ngaysinh"].ToString(),
-        //                gioitinh = (bool)ds.Tables[0].Rows[0]["nv_gioitinh"],
-        //                sdt = ds.Tables[0].Rows[0]["nv_sdt"].ToString(),
-        //                cmnd = ds.Tables[0].Rows[0]["nv_cmnd"].ToString(),
-        //                diachi = ds.Tables[0].Rows[0]["nv_diachi"].ToString(),
-        //                email = ds.Tables[0].Rows[0]["nv_email"].ToString(),
-        //                khoa = (bool)ds.Tables[0].Rows[0]["nv_khoa"],
-        //                xoa = (bool)ds.Tables[0].Rows[0]["nv_xoa"],
-        //                fileanh = ds.Tables[0].Rows[0]["nv_fileanh"].ToString(),
-        //                chucVu = new chucvu()
-        //                {
-        //                    macv = ds.Tables[0].Rows[0]["cv_ma"].ToString(),
-        //                    tencv = ds.Tables[0].Rows[0]["cv_ten"].ToString()
-        //                },
-        //                quyennv = new quyen()
-        //                {
-        //                    maquyen = ds.Tables[0].Rows[0]["q_ma"].ToString(),
-        //                    tenquyen = ds.Tables[0].Rows[0]["q_ten"].ToString(),
-        //                }
-        //            };
-        //        }
-        //    }
-        //    return nv;
-        //}
+    //public List<nhanvien> getAllNhanviens()
+    //{
+    //    List<nhanvien> nhanviens = null;
+    //    if (IsConnect())
+    //    {
+    //        SqlCommand cmd = new SqlCommand("getAllNhanviens");
+    //        cmd.Connection = con;
+    //        cmd.CommandType = CommandType.StoredProcedure;
+    //        DataSet ds = new DataSet();
+    //        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+    //        adapter.Fill(ds);
+    //        if (ds.Tables[0].Rows.Count > 0)
+    //        {
+    //            nhanviens = new List<nhanvien>();
+    //            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+    //            {
+    //                nhanviens.Add(new nhanvien {
+    //                    manv = ds.Tables[0].Rows[i]["nv_ma"].ToString(),
+    //                    tdn = ds.Tables[0].Rows[i]["nv_tdn"].ToString(),
+    //                    matkhau = ds.Tables[0].Rows[i]["nv_matkhau"].ToString(),
+    //                    hoten = ds.Tables[0].Rows[i]["nv_hoten"].ToString(),
+    //                    ngaysinh = ds.Tables[0].Rows[i]["nv_ngaysinh"].ToString(),
+    //                    gioitinh = (bool)ds.Tables[0].Rows[i]["nv_gioitinh"],
+    //                    sdt = ds.Tables[0].Rows[i]["nv_sdt"].ToString(),
+    //                    cmnd = ds.Tables[0].Rows[i]["nv_cmnd"].ToString(),
+    //                    diachi = ds.Tables[0].Rows[i]["nv_diachi"].ToString(),
+    //                    email = ds.Tables[0].Rows[i]["nv_email"].ToString(),
+    //                    khoa = (bool)ds.Tables[0].Rows[i]["nv_khoa"],
+    //                    xoa = (bool)ds.Tables[0].Rows[i]["nv_xoa"],
+    //                    fileanh = ds.Tables[0].Rows[i]["nv_fileanh"].ToString(),
+    //                    chucVu = new chucvu()
+    //                    {
+    //                        macv = ds.Tables[0].Rows[i]["cv_ma"].ToString(),
+    //                        tencv = ds.Tables[0].Rows[i]["cv_ten"].ToString()
+    //                    },
+    //                    quyennv = new quyen()
+    //                    {
+    //                        maquyen = ds.Tables[0].Rows[i]["q_ma"].ToString(),
+    //                        tenquyen = ds.Tables[0].Rows[i]["q_ten"].ToString(),
+    //                    }
+    //                });
+    //            }
+    //        }
+    //    }
+    //    return nhanviens;
+    //}
 
-        //public List<nhanvien> searchNhanviens(string key)
-        //{
-        //    if(key == "" || key == null)
-        //    {
-        //        return getAllNhanviens();
-        //    }
-        //    List<nhanvien> nhanviens = null;
-        //    if (IsConnect())
-        //    {
-        //        SqlCommand cmd = new SqlCommand("searchNhanviens");
-        //        cmd.Parameters.AddWithValue("@key", key);
-        //        cmd.Connection = con;
-        //        cmd.CommandType = CommandType.StoredProcedure;
-        //        DataSet ds = new DataSet();
-        //        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-        //        adapter.Fill(ds);
-        //        if (ds.Tables[0].Rows.Count > 0)
-        //        {
-        //            nhanviens = new List<nhanvien>();
-        //            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-        //            {
-        //                nhanviens.Add(new nhanvien
-        //                {
-        //                    manv = ds.Tables[0].Rows[i]["nv_ma"].ToString(),
-        //                    tdn = ds.Tables[0].Rows[i]["nv_tdn"].ToString(),
-        //                    matkhau = ds.Tables[0].Rows[i]["nv_matkhau"].ToString(),
-        //                    hoten = ds.Tables[0].Rows[i]["nv_hoten"].ToString(),
-        //                    ngaysinh = ds.Tables[0].Rows[i]["nv_ngaysinh"].ToString(),
-        //                    gioitinh = (bool)ds.Tables[0].Rows[i]["nv_gioitinh"],
-        //                    sdt = ds.Tables[0].Rows[i]["nv_sdt"].ToString(),
-        //                    cmnd = ds.Tables[0].Rows[i]["nv_cmnd"].ToString(),
-        //                    diachi = ds.Tables[0].Rows[i]["nv_diachi"].ToString(),
-        //                    email = ds.Tables[0].Rows[i]["nv_email"].ToString(),
-        //                    khoa = (bool)ds.Tables[0].Rows[i]["nv_khoa"],
-        //                    xoa = (bool)ds.Tables[0].Rows[i]["nv_xoa"],
-        //                    fileanh = ds.Tables[0].Rows[i]["nv_fileanh"].ToString(),
-        //                    chucVu = new chucvu()
-        //                    {
-        //                        macv = ds.Tables[0].Rows[i]["cv_ma"].ToString(),
-        //                        tencv = ds.Tables[0].Rows[i]["cv_ten"].ToString()
-        //                    },
-        //                    quyennv = new quyen()
-        //                    {
-        //                        maquyen = ds.Tables[0].Rows[i]["q_ma"].ToString(),
-        //                        tenquyen = ds.Tables[0].Rows[i]["q_ten"].ToString(),
-        //                    }
-        //                });
-        //            }
-        //        }
-        //    }
-        //    return nhanviens;
-        //}
+    //public nhanvien getNhanvienByMa(string manv)
+    //{
+    //    nhanvien nv = null;
+    //    if (IsConnect())
+    //    {
+    //        SqlCommand cmd = new SqlCommand("getNhanvienByMa");
+    //        cmd.Parameters.AddWithValue("@manv", manv);
+    //        cmd.Connection = con;
+    //        cmd.CommandType = CommandType.StoredProcedure;
+    //        DataSet ds = new DataSet();
+    //        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+    //        adapter.Fill(ds);
+    //        if (ds.Tables[0].Rows.Count > 0)
+    //        {
+    //            nv = new nhanvien()
+    //            {
+    //                manv = ds.Tables[0].Rows[0]["nv_ma"].ToString(),
+    //                tdn = ds.Tables[0].Rows[0]["nv_tdn"].ToString(),
+    //                matkhau = ds.Tables[0].Rows[0]["nv_matkhau"].ToString(),
+    //                hoten = ds.Tables[0].Rows[0]["nv_hoten"].ToString(),
+    //                ngaysinh = ds.Tables[0].Rows[0]["nv_ngaysinh"].ToString(),
+    //                gioitinh = (bool)ds.Tables[0].Rows[0]["nv_gioitinh"],
+    //                sdt = ds.Tables[0].Rows[0]["nv_sdt"].ToString(),
+    //                cmnd = ds.Tables[0].Rows[0]["nv_cmnd"].ToString(),
+    //                diachi = ds.Tables[0].Rows[0]["nv_diachi"].ToString(),
+    //                email = ds.Tables[0].Rows[0]["nv_email"].ToString(),
+    //                khoa = (bool)ds.Tables[0].Rows[0]["nv_khoa"],
+    //                xoa = (bool)ds.Tables[0].Rows[0]["nv_xoa"],
+    //                fileanh = ds.Tables[0].Rows[0]["nv_fileanh"].ToString(),
+    //                chucVu = new chucvu()
+    //                {
+    //                    macv = ds.Tables[0].Rows[0]["cv_ma"].ToString(),
+    //                    tencv = ds.Tables[0].Rows[0]["cv_ten"].ToString()
+    //                },
+    //                quyennv = new quyen()
+    //                {
+    //                    maquyen = ds.Tables[0].Rows[0]["q_ma"].ToString(),
+    //                    tenquyen = ds.Tables[0].Rows[0]["q_ten"].ToString(),
+    //                }
+    //            };
+    //        }
+    //    }
+    //    return nv;
+    //}
 
-        //public bool insertNhanvien(nhanvien nv)
-        //{
-        //    bool isSuccess = false;
-        //    if (IsConnect())
-        //    {
-        //        SqlCommand command = new SqlCommand("insertNhanvien");
-        //        command.Parameters.AddWithValue("@nv_ma", nv.manv);
-        //        command.Parameters.AddWithValue("@nv_macv", nv.chucVu.macv);
-        //        command.Parameters.AddWithValue("@nv_hoten", nv.hoten);
-        //        command.Parameters.AddWithValue("@nv_ngaysinh", nv.ngaysinh);
-        //        command.Parameters.AddWithValue("@nv_gioitinh", nv.gioitinh);
-        //        command.Parameters.AddWithValue("@nv_sdt", nv.sdt);
-        //        command.Parameters.AddWithValue("@nv_cmnd", nv.cmnd);
-        //        command.Parameters.AddWithValue("@nv_diachi", nv.diachi);
-        //        command.Parameters.AddWithValue("@nv_email", nv.email);
-        //        command.Parameters.AddWithValue("@nv_khoa", false);
-        //        command.Parameters.AddWithValue("@nv_xoa", false);
-        //        command.Parameters.AddWithValue("@nv_tdn", nv.tdn);
-        //        command.Parameters.AddWithValue("@nv_matkhau", nv.matkhau);
-        //        command.Parameters.AddWithValue("@nv_maquyen", nv.quyennv.maquyen);
-        //        command.Parameters.AddWithValue("@nv_fileanh", nv.fileanh);
-        //        command.CommandType = CommandType.StoredProcedure;
-        //        command.Connection = con;
-        //        isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
-        //    }
-        //    return isSuccess;
-        //}
+    //public List<nhanvien> searchNhanviens(string key)
+    //{
+    //    if(key == "" || key == null)
+    //    {
+    //        return getAllNhanviens();
+    //    }
+    //    List<nhanvien> nhanviens = null;
+    //    if (IsConnect())
+    //    {
+    //        SqlCommand cmd = new SqlCommand("searchNhanviens");
+    //        cmd.Parameters.AddWithValue("@key", key);
+    //        cmd.Connection = con;
+    //        cmd.CommandType = CommandType.StoredProcedure;
+    //        DataSet ds = new DataSet();
+    //        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+    //        adapter.Fill(ds);
+    //        if (ds.Tables[0].Rows.Count > 0)
+    //        {
+    //            nhanviens = new List<nhanvien>();
+    //            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+    //            {
+    //                nhanviens.Add(new nhanvien
+    //                {
+    //                    manv = ds.Tables[0].Rows[i]["nv_ma"].ToString(),
+    //                    tdn = ds.Tables[0].Rows[i]["nv_tdn"].ToString(),
+    //                    matkhau = ds.Tables[0].Rows[i]["nv_matkhau"].ToString(),
+    //                    hoten = ds.Tables[0].Rows[i]["nv_hoten"].ToString(),
+    //                    ngaysinh = ds.Tables[0].Rows[i]["nv_ngaysinh"].ToString(),
+    //                    gioitinh = (bool)ds.Tables[0].Rows[i]["nv_gioitinh"],
+    //                    sdt = ds.Tables[0].Rows[i]["nv_sdt"].ToString(),
+    //                    cmnd = ds.Tables[0].Rows[i]["nv_cmnd"].ToString(),
+    //                    diachi = ds.Tables[0].Rows[i]["nv_diachi"].ToString(),
+    //                    email = ds.Tables[0].Rows[i]["nv_email"].ToString(),
+    //                    khoa = (bool)ds.Tables[0].Rows[i]["nv_khoa"],
+    //                    xoa = (bool)ds.Tables[0].Rows[i]["nv_xoa"],
+    //                    fileanh = ds.Tables[0].Rows[i]["nv_fileanh"].ToString(),
+    //                    chucVu = new chucvu()
+    //                    {
+    //                        macv = ds.Tables[0].Rows[i]["cv_ma"].ToString(),
+    //                        tencv = ds.Tables[0].Rows[i]["cv_ten"].ToString()
+    //                    },
+    //                    quyennv = new quyen()
+    //                    {
+    //                        maquyen = ds.Tables[0].Rows[i]["q_ma"].ToString(),
+    //                        tenquyen = ds.Tables[0].Rows[i]["q_ten"].ToString(),
+    //                    }
+    //                });
+    //            }
+    //        }
+    //    }
+    //    return nhanviens;
+    //}
 
-        //public bool updateNhanvien(nhanvien nv)
-        //{
-        //    bool isSuccess = false;
-        //    if (IsConnect())
-        //    {
-        //        SqlCommand command = new SqlCommand("updateNhanVien");
-        //        command.Parameters.AddWithValue("@nv_ma", nv.manv);
-        //        command.Parameters.AddWithValue("@nv_macv", nv.chucVu.macv);
-        //        command.Parameters.AddWithValue("@nv_hoten", nv.hoten);
-        //        command.Parameters.AddWithValue("@nv_ngaysinh", nv.ngaysinh);
-        //        command.Parameters.AddWithValue("@nv_gioitinh", nv.gioitinh);
-        //        command.Parameters.AddWithValue("@nv_sdt", nv.sdt);
-        //        command.Parameters.AddWithValue("@nv_cmnd", nv.cmnd);
-        //        command.Parameters.AddWithValue("@nv_diachi", nv.diachi);
-        //        command.Parameters.AddWithValue("@nv_email", nv.email);
-        //        command.Parameters.AddWithValue("@nv_khoa", nv.khoa);
-        //        command.Parameters.AddWithValue("@nv_xoa", nv.xoa);
-        //        command.Parameters.AddWithValue("@nv_tdn", nv.tdn);
-        //        command.Parameters.AddWithValue("@nv_matkhau", nv.matkhau);
-        //        command.Parameters.AddWithValue("@nv_maquyen", nv.quyennv.maquyen);
-        //        command.Parameters.AddWithValue("@nv_fileanh", nv.fileanh);
-        //        command.CommandType = CommandType.StoredProcedure;
-        //        command.Connection = con;
-        //        isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
-        //    }
-        //    return isSuccess;
-        //}
+    //public bool insertNhanvien(nhanvien nv)
+    //{
+    //    bool isSuccess = false;
+    //    if (IsConnect())
+    //    {
+    //        SqlCommand command = new SqlCommand("insertNhanvien");
+    //        command.Parameters.AddWithValue("@nv_ma", nv.manv);
+    //        command.Parameters.AddWithValue("@nv_macv", nv.chucVu.macv);
+    //        command.Parameters.AddWithValue("@nv_hoten", nv.hoten);
+    //        command.Parameters.AddWithValue("@nv_ngaysinh", nv.ngaysinh);
+    //        command.Parameters.AddWithValue("@nv_gioitinh", nv.gioitinh);
+    //        command.Parameters.AddWithValue("@nv_sdt", nv.sdt);
+    //        command.Parameters.AddWithValue("@nv_cmnd", nv.cmnd);
+    //        command.Parameters.AddWithValue("@nv_diachi", nv.diachi);
+    //        command.Parameters.AddWithValue("@nv_email", nv.email);
+    //        command.Parameters.AddWithValue("@nv_khoa", false);
+    //        command.Parameters.AddWithValue("@nv_xoa", false);
+    //        command.Parameters.AddWithValue("@nv_tdn", nv.tdn);
+    //        command.Parameters.AddWithValue("@nv_matkhau", nv.matkhau);
+    //        command.Parameters.AddWithValue("@nv_maquyen", nv.quyennv.maquyen);
+    //        command.Parameters.AddWithValue("@nv_fileanh", nv.fileanh);
+    //        command.CommandType = CommandType.StoredProcedure;
+    //        command.Connection = con;
+    //        isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+    //    }
+    //    return isSuccess;
+    //}
 
-        //public bool deleteNhanvien(string manv)
-        //{
-        //    bool isSuccess = false;
-        //    if (IsConnect())
-        //    {
-        //        SqlCommand command = new SqlCommand("deleteNhanvien");
-        //        command.Parameters.AddWithValue("@nv_ma", manv);
-        //        command.CommandType = CommandType.StoredProcedure;
-        //        command.Connection = con;
-        //        isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
-        //    }
-        //    return isSuccess;
-        //}
+    //public bool updateNhanvien(nhanvien nv)
+    //{
+    //    bool isSuccess = false;
+    //    if (IsConnect())
+    //    {
+    //        SqlCommand command = new SqlCommand("updateNhanVien");
+    //        command.Parameters.AddWithValue("@nv_ma", nv.manv);
+    //        command.Parameters.AddWithValue("@nv_macv", nv.chucVu.macv);
+    //        command.Parameters.AddWithValue("@nv_hoten", nv.hoten);
+    //        command.Parameters.AddWithValue("@nv_ngaysinh", nv.ngaysinh);
+    //        command.Parameters.AddWithValue("@nv_gioitinh", nv.gioitinh);
+    //        command.Parameters.AddWithValue("@nv_sdt", nv.sdt);
+    //        command.Parameters.AddWithValue("@nv_cmnd", nv.cmnd);
+    //        command.Parameters.AddWithValue("@nv_diachi", nv.diachi);
+    //        command.Parameters.AddWithValue("@nv_email", nv.email);
+    //        command.Parameters.AddWithValue("@nv_khoa", nv.khoa);
+    //        command.Parameters.AddWithValue("@nv_xoa", nv.xoa);
+    //        command.Parameters.AddWithValue("@nv_tdn", nv.tdn);
+    //        command.Parameters.AddWithValue("@nv_matkhau", nv.matkhau);
+    //        command.Parameters.AddWithValue("@nv_maquyen", nv.quyennv.maquyen);
+    //        command.Parameters.AddWithValue("@nv_fileanh", nv.fileanh);
+    //        command.CommandType = CommandType.StoredProcedure;
+    //        command.Connection = con;
+    //        isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+    //    }
+    //    return isSuccess;
+    //}
 
-        //public bool changePassword(nhanvien nv, string matkhaumoi)
-        //{
-        //    bool isSuccess = false;
-        //    if (IsConnect())
-        //    {
-        //        SqlCommand command = new SqlCommand("changePassword");
-        //        command.Parameters.AddWithValue("@nv_tdn", nv.tdn);
-        //        command.Parameters.AddWithValue("@nv_matkhau", nv.matkhau);
-        //        command.Parameters.AddWithValue("@matkhaumoi", matkhaumoi);
-        //        command.CommandType = CommandType.StoredProcedure;
-        //        command.Connection = con;
-        //        isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
-        //    }
-        //    return isSuccess;
-        //}
+    //public bool deleteNhanvien(string manv)
+    //{
+    //    bool isSuccess = false;
+    //    if (IsConnect())
+    //    {
+    //        SqlCommand command = new SqlCommand("deleteNhanvien");
+    //        command.Parameters.AddWithValue("@nv_ma", manv);
+    //        command.CommandType = CommandType.StoredProcedure;
+    //        command.Connection = con;
+    //        isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+    //    }
+    //    return isSuccess;
+    //}
 
-    
+    //public bool changePassword(nhanvien nv, string matkhaumoi)
+    //{
+    //    bool isSuccess = false;
+    //    if (IsConnect())
+    //    {
+    //        SqlCommand command = new SqlCommand("changePassword");
+    //        command.Parameters.AddWithValue("@nv_tdn", nv.tdn);
+    //        command.Parameters.AddWithValue("@nv_matkhau", nv.matkhau);
+    //        command.Parameters.AddWithValue("@matkhaumoi", matkhaumoi);
+    //        command.CommandType = CommandType.StoredProcedure;
+    //        command.Connection = con;
+    //        isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+    //    }
+    //    return isSuccess;
+    //}
+
+
 }
