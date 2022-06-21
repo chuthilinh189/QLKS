@@ -47,7 +47,7 @@ namespace QLKSAPI.Controllers
             return con.updatePhong(p) ? Request.CreateResponse(HttpStatusCode.OK, p) : Request.CreateResponse(HttpStatusCode.NotFound);
         }
 
-        [HttpGet]
+        [HttpDelete]
         [Route("api/Phong_Delete")]
         public Phong deletePhong(string MaPhong)
         {

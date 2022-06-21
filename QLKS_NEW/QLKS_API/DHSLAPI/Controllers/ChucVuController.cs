@@ -1,4 +1,5 @@
-﻿using QLKSAPI.Models;
+﻿
+using QLKSAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,24 +43,24 @@ namespace DHSLAPI.Controllers
 
         [HttpPost]
         [Route("api/ChucVuInsert")]
-        public bool ChucVuInsert(ChucVu cv)
+        public HttpResponseMessage ChucVuInsert(ChucVu cv)
         {
             cv.MaCV = Helper.EnCode(DateTime.Now.ToString("yyyy-mm-dd:hh-mm-ss"));
-            return con.ChucVuInsert(cv);
+            return con.ChucVuInsert(cv) ? Request.CreateResponse(HttpStatusCode.Created, cv) : Request.CreateResponse(HttpStatusCode.Conflict);
         }
 
         [HttpPut]
         [Route("api/ChucVuUpdate")]
-        public bool ChucVuUpdate(ChucVu cv)
+        public HttpResponseMessage ChucVuUpdate(ChucVu cv)
         {
-            return con.ChucVuInsert(cv);
+            return con.ChucVuUpdate(cv) ? Request.CreateResponse(HttpStatusCode.Created, cv) : Request.CreateResponse(HttpStatusCode.Conflict);
         }
 
         [HttpDelete]
         [Route("api/ChucVuDelete")]
-        public bool ChucVuDelete(string MaCV)
+        public HttpResponseMessage ChucVuDelete(string MaCV)
         {
-            return con.ChucVuDelete(MaCV);
+            return con.ChucVuDelete(MaCV) ? Request.CreateResponse(HttpStatusCode.Created, MaCV) : Request.CreateResponse(HttpStatusCode.Conflict);
         }
     }
 }

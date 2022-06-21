@@ -46,7 +46,7 @@ namespace QLKSAPI.Controllers
             return con.updateDichVu(dv) ? Request.CreateResponse(HttpStatusCode.OK, dv) : Request.CreateResponse(HttpStatusCode.NotFound);
         }
 
-        [HttpGet]
+        [HttpDelete]
         [Route("api/DichVu_Delete")]
         public DichVu deleteDichVu(string MaDV)
         {
