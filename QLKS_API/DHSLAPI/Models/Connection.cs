@@ -803,5 +803,180 @@ namespace QLKSAPI.Models
             }
             return isSuccess;
         }
+
+        public List<anhphong> getAnhPhongbyPhong(string ap_maphong)
+        {
+            List<anhphong> anhphongs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("getAnhPhongs");
+                cmd.Parameters.AddWithValue("@ap_maphong", ap_maphong);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    anhphongs = new List<anhphong>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        anhphongs.Add(new anhphong
+                        {
+                            ap_ma = ds.Tables[0].Rows[i]["ap_ma"].ToString(),
+                            ap_maphong = ds.Tables[0].Rows[i]["ap_maphong"].ToString(),
+                            link = ds.Tables[0].Rows[i]["link"].ToString(),
+
+                        });
+                    }
+                }
+            }
+            return anhphongs;
+        }
+
+        public bool insertAnhPhong(anhphong ap)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("insertAnhPhong");
+                command.Parameters.AddWithValue("@ap_ma", ap.ap_ma);
+                command.Parameters.AddWithValue("@ap_maphong", ap.ap_maphong);
+                command.Parameters.AddWithValue("@link", ap.link);
+               
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool deleteAnhPhong(string ap_ma)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("deleteAnhPhong");
+                command.Parameters.AddWithValue("@ap_ma", ap_ma);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public List<khachhang> getAllKhachhangs()
+        {
+            List<khachhang> khachhangs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("getAllKhachhangs");
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    khachhangs = new List<khachhang>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        khachhangs.Add(new khachhang
+                        {
+                            kh_ma = ds.Tables[0].Rows[i]["kh_ma"].ToString(),
+                            kh_hoten = ds.Tables[0].Rows[i]["kh_hoten"].ToString(),
+                            kh_cmnd= ds.Tables[0].Rows[i]["kh_cmnd"].ToString(),
+                            kh_sdt = ds.Tables[0].Rows[i]["kh_sdt"].ToString(),
+                            email = ds.Tables[0].Rows[i]["email"].ToString(),
+                            diachi = ds.Tables[0].Rows[i]["diachi"].ToString(),
+                           
+                        });
+                    }
+                }
+            }
+            return khachhangs;
+        }
+
+        public khachhang getKhachHangByMa(string kh_ma)
+        {
+            khachhang kh = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("getKhachHangByMa");
+                cmd.Parameters.AddWithValue("@kh_ma", kh_ma);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    kh = new khachhang()
+                    {
+                        kh_ma = ds.Tables[0].Rows[0]["kh_ma"].ToString(),
+                        kh_hoten = ds.Tables[0].Rows[0]["kh_hoten"].ToString(),
+                        kh_cmnd = ds.Tables[0].Rows[0]["kh_cmnd"].ToString(),
+                        kh_sdt = ds.Tables[0].Rows[0]["kh_sdt"].ToString(),
+                        email = ds.Tables[0].Rows[0]["email"].ToString(),
+                        diachi = ds.Tables[0].Rows[0]["diachi"].ToString(),
+                    };
+                }
+            }
+            return kh;
+        }
+
+
+        public bool insertKhachHang(khachhang kh)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("insertKhachHang");
+                command.Parameters.AddWithValue("@kh_ma", kh.kh_ma);
+                command.Parameters.AddWithValue("@kh_hoten", kh.kh_hoten);
+                command.Parameters.AddWithValue("@kh_cmnd", kh.kh_cmnd);
+                command.Parameters.AddWithValue("@kh_sdt", kh.kh_sdt);
+                command.Parameters.AddWithValue("@email", kh.email);
+                command.Parameters.AddWithValue("@diachi", kh.diachi);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool updateKhachHang(khachhang kh)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("updateKhachHang");
+                command.Parameters.AddWithValue("@kh_ma", kh.kh_ma);
+                command.Parameters.AddWithValue("@kh_hoten", kh.kh_hoten);
+                command.Parameters.AddWithValue("@kh_cmnd", kh.kh_cmnd);
+                command.Parameters.AddWithValue("@kh_sdt", kh.kh_sdt);
+                command.Parameters.AddWithValue("@email", kh.email);
+                command.Parameters.AddWithValue("@diachi", kh.diachi);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool deleteKhachHang(string kh_ma)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("deleteKhachHang");
+                command.Parameters.AddWithValue("@kh_ma", kh_ma);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
     }
 }
