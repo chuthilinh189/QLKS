@@ -1,0 +1,9 @@
+C:\Users\Jundat95\Documents\Visual Studio 2012\Projects\QuanLyKhachSanNew\Business\bin\Debug\Business.dll
+C:\Users\Jundat95\Documents\Visual Studio 2012\Projects\QuanLyKhachSanNew\Business\bin\Debug\Business.pdb
+C:\Users\Jundat95\Documents\Visual Studio 2012\Projects\QuanLyKhachSanNew\Business\bin\Debug\DataAccess.dll
+C:\Users\Jundat95\Documents\Visual Studio 2012\Projects\QuanLyKhachSanNew\Business\bin\Debug\Entities.dll
+C:\Users\Jundat95\Documents\Visual Studio 2012\Projects\QuanLyKhachSanNew\Business\bin\Debug\DataAccess.pdb
+C:\Users\Jundat95\Documents\Visual Studio 2012\Projects\QuanLyKhachSanNew\Business\bin\Debug\Entities.pdb
+C:\Users\Jundat95\Documents\Visual Studio 2012\Projects\QuanLyKhachSanNew\Business\obj\Debug\Business.csprojResolveAssemblyReference.cache
+C:\Users\Jundat95\Documents\Visual Studio 2012\Projects\QuanLyKhachSanNew\Business\obj\Debug\Business.dll
+C:\Users\Jundat95\Documents\Visual Studio 2012\Projects\QuanLyKhachSanNew\Business\obj\Debug\Business.pdb

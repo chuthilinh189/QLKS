@@ -1,0 +1,5 @@
+C:\Users\Jundat95\Documents\Visual Studio 2012\Projects\QuanLyKhachSanNew\Entities\bin\Debug\Entities.dll
+C:\Users\Jundat95\Documents\Visual Studio 2012\Projects\QuanLyKhachSanNew\Entities\bin\Debug\Entities.pdb
+C:\Users\Jundat95\Documents\Visual Studio 2012\Projects\QuanLyKhachSanNew\Entities\obj\Debug\Entities.dll
+C:\Users\Jundat95\Documents\Visual Studio 2012\Projects\QuanLyKhachSanNew\Entities\obj\Debug\Entities.pdb
+C:\Users\Jundat95\documents\visual studio 2012\Projects\QuanLyKhachSanNew\Entities\obj\Debug\Entities.csprojResolveAssemblyReference.cache
