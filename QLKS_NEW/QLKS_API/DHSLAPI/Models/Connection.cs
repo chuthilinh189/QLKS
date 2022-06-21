@@ -89,6 +89,166 @@ namespace QLKSAPI.Models
             return nhanViens;
         }
 
+        // Chức vụ
+        public List<ChucVu> ChucVuSelectAll()
+        {
+            List<ChucVu> chucVus = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblChucVu_SelectAll");
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    chucVus = new List<ChucVu>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        chucVus.Add(new ChucVu
+                        {
+                            MaCV = ds.Tables[0].Rows[i]["MaCV"].ToString(),
+                            Khu = int.Parse(ds.Tables[0].Rows[i]["Khu"].ToString()),
+                            TenDonVi = ds.Tables[0].Rows[i]["TenDonVi"].ToString(),
+                            TenChucVu = ds.Tables[0].Rows[i]["ChucVu"].ToString()
+                        });
+                    }
+                }
+            }
+            return chucVus;
+        }
+
+        public List<ChucVu> ChucVuSelectTop(string Top, string Where, string Order)
+        {
+            List<ChucVu> chucVus = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblChucVu_SelectTop");
+                cmd.Parameters.AddWithValue("@Top", Top);
+                cmd.Parameters.AddWithValue("@Where", Where);
+                cmd.Parameters.AddWithValue("@Order", Order);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    chucVus = new List<ChucVu>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        chucVus.Add(new ChucVu
+                        {
+                            MaCV = ds.Tables[0].Rows[i]["MaCV"].ToString(),
+                            Khu = int.Parse(ds.Tables[0].Rows[i]["Khu"].ToString()),
+                            TenDonVi = ds.Tables[0].Rows[i]["TenDonVi"].ToString(),
+                            TenChucVu = ds.Tables[0].Rows[i]["ChucVu"].ToString()
+                        });
+                    }
+                }
+            }
+            return chucVus;
+        }
+
+        public ChucVu ChucVuSelectByID(string MaCV)
+        {
+            ChucVu chucVus = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblChucVu_SelectByID");
+                cmd.Parameters.AddWithValue("@MaCV", MaCV);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    chucVus = new ChucVu();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        chucVus = new ChucVu()
+                        {
+                            MaCV = ds.Tables[0].Rows[i]["MaCV"].ToString(),
+                            Khu = int.Parse(ds.Tables[0].Rows[i]["Khu"].ToString()),
+                            TenDonVi = ds.Tables[0].Rows[i]["TenDonVi"].ToString(),
+                            TenChucVu = ds.Tables[0].Rows[i]["ChucVu"].ToString()
+                        };
+                    }
+                }
+            }
+            return chucVus;
+        }
+
+        public bool ChucVuTestByID(string MaCV)
+        {
+            bool b = false;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblChucVu_TestByID");
+                cmd.Parameters.AddWithValue("@MaCV", MaCV);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    b = Convert.ToBoolean(ds.Tables[1].Rows[0]["TestID"].ToString());
+                }
+            }
+            return b;
+        }
+
+        public bool ChucVuInsert(ChucVu cv)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblChucVu_Insert");
+                command.Parameters.AddWithValue("@MaCV", cv.MaCV);
+                command.Parameters.AddWithValue("@Khu", cv.Khu);
+                command.Parameters.AddWithValue("@TenDonVi", cv.TenDonVi);
+                command.Parameters.AddWithValue("@ChucVu", cv.TenChucVu);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool ChucVuUpdate(ChucVu cv)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblChucVu_Update");
+                command.Parameters.AddWithValue("@MaCV", cv.MaCV);
+                command.Parameters.AddWithValue("@Khu", cv.Khu);
+                command.Parameters.AddWithValue("@TenDonVi", cv.TenDonVi);
+                command.Parameters.AddWithValue("@ChucVu", cv.TenChucVu);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool ChucVuDelete(string MaCV)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblChucVu_Delete");
+                command.Parameters.AddWithValue("@MaCV", MaCV);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
         //public nhanvien Login(string tdn, string matkhau)
         //{
         //    nhanvien nv = null;
