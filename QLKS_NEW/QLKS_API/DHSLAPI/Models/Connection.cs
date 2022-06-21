@@ -1003,9 +1003,6 @@ namespace QLKSAPI.Models
             return isSuccess;
         }
 
-    }
-
-
         public List<SDDV> SDDVSelectAll()
         {
             List<SDDV> sddvs = null;
@@ -1033,17 +1030,17 @@ namespace QLKSAPI.Models
                             },
                             NhanVien = new NhanVien()
                             {
-                                
+
                                 MaNV = ds.Tables[0].Rows[i]["MaNV"].ToString(),
                                 HoDem = ds.Tables[0].Rows[i]["HoDem"].ToString(),
                                 Ten = ds.Tables[0].Rows[i]["Ten"].ToString(),
                                 NgaySinh = DateTime.Parse(ds.Tables[0].Rows[i]["NgaySinh"].ToString()),
                                 CMND = ds.Tables[0].Rows[i]["CMND"].ToString()
-                                
+
                             },
                             NgaySuDung = DateTime.Parse(ds.Tables[0].Rows[i]["NgaySuDung"].ToString()),
                             SoLuong = int.Parse(ds.Tables[0].Rows[i]["SoLuong"].ToString())
-                            
+
                         });
                     }
                 }
@@ -1326,7 +1323,7 @@ namespace QLKSAPI.Models
             return thanToans;
         }
 
-        
+
 
         public List<ThanhToan> ThanhToanSelectTop(string Top, string Where, string Order)
         {
@@ -1424,7 +1421,7 @@ namespace QLKSAPI.Models
                 SqlCommand command = new SqlCommand("tblThanhToan_Update");
                 command.Parameters.AddWithValue("@MaDK", tt.MaDK);
                 command.Parameters.AddWithValue("@MaPhong", tt.MaPhong);
-                command.Parameters.AddWithValue("@MaNV",tt.MaNV);
+                command.Parameters.AddWithValue("@MaNV", tt.MaNV);
                 command.Parameters.AddWithValue("@NgayThanhToan", tt.NgayThanhToan);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Connection = con;
@@ -1432,10 +1429,11 @@ namespace QLKSAPI.Models
             }
             return isSuccess;
         }
-
     }
 
 
+
+    
 
 
 
