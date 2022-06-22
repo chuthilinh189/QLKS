@@ -557,6 +557,38 @@ namespace QLKSAPI.Models
             }
             return p;
         }
+
+        public List<Phong> PhongSelectTop(string Top, string Where, string Order)
+        {
+            List<Phong> phongs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblPhong_SelectTop");
+                cmd.Parameters.AddWithValue("@Top", Top);
+                cmd.Parameters.AddWithValue("@Where", Where);
+                cmd.Parameters.AddWithValue("@Order", Order);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    phongs = new List<Phong>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        phongs.Add(new Phong
+                        {
+                            MaPhong = ds.Tables[0].Rows[i]["MaPhong"].ToString(),
+                            TenPhong = ds.Tables[0].Rows[i]["TenPhong"].ToString(),
+                            LoaiPhong = ds.Tables[0].Rows[i]["LoaiPhong"].ToString(),
+                            Gia = (int)ds.Tables[0].Rows[i]["Gia"],
+                        });
+                    }
+                }
+            }
+            return phongs;
+        }
         public bool insertPhong(Phong p)
         {
             bool isSuccess = false;
@@ -672,12 +704,47 @@ namespace QLKSAPI.Models
             }
             return kh;
         }
+
+        public List<KhachHang> KhachHangSelectTop(string Top, string Where, string Order)
+        {
+            List<KhachHang> khachHangs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblThanhToan_SelectTop");
+                cmd.Parameters.AddWithValue("@Top", Top);
+                cmd.Parameters.AddWithValue("@Where", Where);
+                cmd.Parameters.AddWithValue("@Order", Order);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    khachHangs = new List<KhachHang>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        khachHangs.Add(new KhachHang
+                        {
+                            MaKhach = ds.Tables[0].Rows[i]["MaKhach"].ToString(),
+                            HoDem = ds.Tables[0].Rows[i]["HoDem"].ToString(),
+                            Ten = ds.Tables[0].Rows[i]["Ten"].ToString(),
+                            NgaySinh = (DateTime)ds.Tables[0].Rows[i]["NgaySinh"],
+                            CMND = ds.Tables[0].Rows[i]["CMND"].ToString(),
+                            QuocTich = ds.Tables[0].Rows[i]["QuocTich"].ToString(),
+                            GhiChu = ds.Tables[0].Rows[i]["GhiChu"].ToString(),
+                        });
+                    }
+                }
+            }
+            return khachHangs;
+        }
         public bool insertKhachHang(KhachHang kh)
         {
             bool isSuccess = false;
             if (IsConnect())
             {
-                SqlCommand command = new SqlCommand("tblKhachHang_Insert");
+                SqlCommand command = new SqlCommand("tblKhachHang_SelectTop");
                 command.Parameters.AddWithValue("@MaKhach", kh.MaKhach);
                 command.Parameters.AddWithValue("@HoDem", kh.HoDem);
                 command.Parameters.AddWithValue("@Ten", kh.Ten);
@@ -784,6 +851,37 @@ namespace QLKSAPI.Models
                 }
             }
             return dv;
+        }
+
+        public List<DichVu> DichVuSelectTop(string Top, string Where, string Order)
+        {
+            List<DichVu> dichVus = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblDichVu_SelectTop");
+                cmd.Parameters.AddWithValue("@Top", Top);
+                cmd.Parameters.AddWithValue("@Where", Where);
+                cmd.Parameters.AddWithValue("@Order", Order);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    dichVus = new List<DichVu>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        dichVus.Add(new DichVu
+                        {
+                            MaDV = ds.Tables[0].Rows[i]["MaDV"].ToString(),
+                            TenDV = ds.Tables[0].Rows[i]["TenDV"].ToString(),
+                            GiaTien = (int)ds.Tables[0].Rows[i]["GiaTien"],
+                        });
+                    }
+                }
+            }
+            return dichVus;
         }
         public bool insertDichVu(DichVu dv)
         {

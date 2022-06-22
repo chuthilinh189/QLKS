@@ -29,7 +29,12 @@ namespace QLKSAPI.Controllers
             return con.SelectPhongById(MaPhong);
         }
 
-        
+        [HttpGet]
+        [Route("api/PhongSelectTop")]
+        public List<Phong> PhongSelectTop(string Top, string Where, string Order)
+        {
+            return con.PhongSelectTop(Top, Where, Order);
+        }
 
         [HttpPost]
         [Route("api/Phong_Insert")]

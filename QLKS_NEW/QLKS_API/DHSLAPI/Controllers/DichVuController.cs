@@ -28,7 +28,12 @@ namespace QLKSAPI.Controllers
             return con.SelectDichVuById(MaDV);
         }
 
-
+        [HttpGet]
+        [Route("api/DichVuSelectTop")]
+        public List<DichVu> DichVuSelectTop(string Top, string Where, string Order)
+        {
+            return con.DichVuSelectTop(Top, Where, Order);
+        }
 
         [HttpPost]
         [Route("api/DichVu_Insert")]
