@@ -15,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DHSLAPI</RootNamespace>
     <AssemblyName>DHSLAPI</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -200,6 +200,8 @@
     <Compile Include="Controllers\KhachHangController.cs" />
     <Compile Include="Controllers\NhanVienController.cs" />
     <Compile Include="Controllers\PhongController.cs" />
+    <Compile Include="Controllers\SDDVController.cs" />
+    <Compile Include="Controllers\ThanhToanController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -212,6 +214,8 @@
     <Compile Include="Models\KhachHang.cs" />
     <Compile Include="Models\NhanVien.cs" />
     <Compile Include="Models\Phong.cs" />
+    <Compile Include="Models\SDDV.cs" />
+    <Compile Include="Models\ThanhToan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -278,7 +282,9 @@
     <Folder Include="Views\Phongttb\" />
     <Folder Include="Views\phong\" />
     <Folder Include="Views\quyen\" />
+    <Folder Include="Views\SDDV\" />
     <Folder Include="Views\ShipInfo\" />
+    <Folder Include="Views\ThanhToan\" />
     <Folder Include="Views\trangthietbi\" />
     <Folder Include="Views\user\" />
   </ItemGroup>
