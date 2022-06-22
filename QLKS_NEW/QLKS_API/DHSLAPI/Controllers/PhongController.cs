@@ -57,5 +57,20 @@ namespace QLKSAPI.Controllers
             } : null;
         }
 
+
+        [HttpGet]
+        [Route("api/PhongDaDKs")]
+        public List<Phong> SelectPhongDaDK()
+        {
+            return con.SelectPhongDaDK();
+        }
+
+        [HttpGet]
+        [Route("api/PhongDaNhans")]
+        public List<Phong> SelectPhongDaNhan()
+        {
+            return con.SelectPhongDaNhan();
+        }
+
     }
 }

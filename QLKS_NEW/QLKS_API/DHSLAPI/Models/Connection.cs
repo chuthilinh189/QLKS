@@ -408,6 +408,64 @@ namespace QLKSAPI.Models
             return phongs;
         }
 
+        public List<Phong> SelectPhongDaDK()
+        {
+            List<Phong> phongs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblPhong_DaDangKy");
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    phongs = new List<Phong>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        phongs.Add(new Phong
+                        {
+                            MaPhong = ds.Tables[0].Rows[i]["MaPhong"].ToString(),
+                            TenPhong = ds.Tables[0].Rows[i]["TenPhong"].ToString(),
+                            LoaiPhong = ds.Tables[0].Rows[i]["LoaiPhong"].ToString(),
+                            Gia = (int)ds.Tables[0].Rows[i]["Gia"],
+                        });
+                    }
+                }
+            }
+            return phongs;
+        }
+        public List<Phong> SelectPhongDaNhan()
+        {
+            List<Phong> phongs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblPhong_DaNhanPhong");
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    phongs = new List<Phong>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        phongs.Add(new Phong
+                        {
+                            MaPhong = ds.Tables[0].Rows[i]["MaPhong"].ToString(),
+                            TenPhong = ds.Tables[0].Rows[i]["TenPhong"].ToString(),
+                            LoaiPhong = ds.Tables[0].Rows[i]["LoaiPhong"].ToString(),
+                            Gia = (int)ds.Tables[0].Rows[i]["Gia"],
+                        });
+                    }
+                }
+            }
+            return phongs;
+        }
         public Phong SelectPhongById(string MaPhong)
         {
             Phong p = null;
