@@ -25,6 +25,13 @@ namespace QLKSAPI.Controllers
             return con.SelectKhachHangById(MaKhach);
         }
 
+        [HttpGet]
+        [Route("api/KhachHangSelectTop")]
+        public List<KhachHang> KhachHangSelectTop(string Top, string Where, string Order)
+        {
+            return con.KhachHangSelectTop(Top, Where, Order);
+        }
+
         [HttpPost]
         [Route("api/KhachHang_Insert")]
         public HttpResponseMessage insertKhachHang([FromBody] KhachHang kh)

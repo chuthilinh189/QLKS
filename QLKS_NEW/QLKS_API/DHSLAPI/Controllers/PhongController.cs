@@ -29,7 +29,12 @@ namespace QLKSAPI.Controllers
             return con.SelectPhongById(MaPhong);
         }
 
-        
+        [HttpGet]
+        [Route("api/PhongSelectTop")]
+        public List<Phong> PhongSelectTop(string Top, string Where, string Order)
+        {
+            return con.PhongSelectTop(Top, Where, Order);
+        }
 
         [HttpPost]
         [Route("api/Phong_Insert")]
@@ -47,7 +52,7 @@ namespace QLKSAPI.Controllers
             return con.updatePhong(p) ? Request.CreateResponse(HttpStatusCode.OK, p) : Request.CreateResponse(HttpStatusCode.NotFound);
         }
 
-        [HttpGet]
+        [HttpDelete]
         [Route("api/Phong_Delete")]
         public Phong deletePhong(string MaPhong)
         {
@@ -55,6 +60,21 @@ namespace QLKSAPI.Controllers
             {
                 MaPhong = MaPhong
             } : null;
+        }
+
+
+        [HttpGet]
+        [Route("api/PhongDaDKs")]
+        public List<Phong> SelectPhongDaDK()
+        {
+            return con.SelectPhongDaDK();
+        }
+
+        [HttpGet]
+        [Route("api/PhongDaNhans")]
+        public List<Phong> SelectPhongDaNhan()
+        {
+            return con.SelectPhongDaNhan();
         }
 
     }

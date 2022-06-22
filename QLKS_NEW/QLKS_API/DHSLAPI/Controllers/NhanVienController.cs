@@ -66,6 +66,20 @@ namespace QLKSAPI.Controllers
             return con.Login(nv.MaNV, nv.MatKhau);
         }
 
+        [HttpGet]
+        [Route("api/NhanVienSelectTop")]
+        public List<NhanVien> NhanVienSelectTop(string Top, string Where, string Order)
+        {
+            return con.NhanVienSelectTop(Top, Where, Order);
+        }
+
+        [HttpGet]
+        [Route("api/NhanVienTestByID")]
+        public bool NhanVienTestByID(string MaNV)
+        {
+            return con.NhanVienTestByID(MaNV);
+        }
+
         //[HttpGet]
         //[Route("api/nhanviens")]
         //public List<nhanvien> getAllNhanviens()

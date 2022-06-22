@@ -1,4 +1,5 @@
-﻿using QLKSAPI.Models;
+﻿using DHSLAPI.Models;
+using QLKSAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -184,6 +185,69 @@ namespace QLKSAPI.Models
             }
             return isSuccess;
         }
+
+        public List<NhanVien> NhanVienSelectTop(string Top, string Where, string Order)
+        {
+            List<NhanVien> nhanViens = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblNhanVien_SelectTop");
+                cmd.Parameters.AddWithValue("@Top", Top);
+                cmd.Parameters.AddWithValue("@Where", Where);
+                cmd.Parameters.AddWithValue("@Order", Order);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    nhanViens = new List<NhanVien>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        nhanViens.Add(new NhanVien
+                        {
+                            MaNV = ds.Tables[0].Rows[i]["MaNV"].ToString(),
+                            HoDem = ds.Tables[0].Rows[i]["HoDem"].ToString(),
+                            Ten = ds.Tables[0].Rows[i]["Ten"].ToString(),
+                            NgaySinh = DateTime.Parse(ds.Tables[0].Rows[i]["NgaySinh"].ToString()),
+                            CMND = ds.Tables[0].Rows[i]["CMND"].ToString(),
+                            GhiChu = ds.Tables[0].Rows[i]["NghiChu"].ToString(),
+                            MatKhau = ds.Tables[0].Rows[i]["MatKhau"].ToString(),
+                            ChucVuNV = new ChucVu()
+                            {
+                                MaCV = ds.Tables[0].Rows[i]["MaCV"].ToString(),
+                                Khu = int.Parse(ds.Tables[0].Rows[i]["Khu"].ToString()),
+                                TenDonVi = ds.Tables[0].Rows[i]["TenDonVi"].ToString(),
+                                TenChucVu = ds.Tables[0].Rows[i]["ChucVu"].ToString()
+                            }
+                        });
+                    }
+                }
+            }
+            return nhanViens;
+        }
+
+        public bool NhanVienTestByID(string MaNV)
+        {
+            bool b = false;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblNhanVien_TestByID");
+                cmd.Parameters.AddWithValue("@MaNV", MaNV);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    b = Convert.ToBoolean(ds.Tables[1].Rows[0]["TestID"].ToString());
+                }
+            }
+            return b;
+        }
+
 
         public NhanVien Login(string tdn, string matkhau)
         {
@@ -408,6 +472,64 @@ namespace QLKSAPI.Models
             return phongs;
         }
 
+        public List<Phong> SelectPhongDaDK()
+        {
+            List<Phong> phongs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblPhong_DaDangKy");
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    phongs = new List<Phong>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        phongs.Add(new Phong
+                        {
+                            MaPhong = ds.Tables[0].Rows[i]["MaPhong"].ToString(),
+                            TenPhong = ds.Tables[0].Rows[i]["TenPhong"].ToString(),
+                            LoaiPhong = ds.Tables[0].Rows[i]["LoaiPhong"].ToString(),
+                            Gia = (int)ds.Tables[0].Rows[i]["Gia"],
+                        });
+                    }
+                }
+            }
+            return phongs;
+        }
+        public List<Phong> SelectPhongDaNhan()
+        {
+            List<Phong> phongs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblPhong_DaNhanPhong");
+
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    phongs = new List<Phong>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        phongs.Add(new Phong
+                        {
+                            MaPhong = ds.Tables[0].Rows[i]["MaPhong"].ToString(),
+                            TenPhong = ds.Tables[0].Rows[i]["TenPhong"].ToString(),
+                            LoaiPhong = ds.Tables[0].Rows[i]["LoaiPhong"].ToString(),
+                            Gia = (int)ds.Tables[0].Rows[i]["Gia"],
+                        });
+                    }
+                }
+            }
+            return phongs;
+        }
         public Phong SelectPhongById(string MaPhong)
         {
             Phong p = null;
@@ -434,6 +556,38 @@ namespace QLKSAPI.Models
                 }
             }
             return p;
+        }
+
+        public List<Phong> PhongSelectTop(string Top, string Where, string Order)
+        {
+            List<Phong> phongs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblPhong_SelectTop");
+                cmd.Parameters.AddWithValue("@Top", Top);
+                cmd.Parameters.AddWithValue("@Where", Where);
+                cmd.Parameters.AddWithValue("@Order", Order);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    phongs = new List<Phong>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        phongs.Add(new Phong
+                        {
+                            MaPhong = ds.Tables[0].Rows[i]["MaPhong"].ToString(),
+                            TenPhong = ds.Tables[0].Rows[i]["TenPhong"].ToString(),
+                            LoaiPhong = ds.Tables[0].Rows[i]["LoaiPhong"].ToString(),
+                            Gia = (int)ds.Tables[0].Rows[i]["Gia"],
+                        });
+                    }
+                }
+            }
+            return phongs;
         }
         public bool insertPhong(Phong p)
         {
@@ -550,12 +704,47 @@ namespace QLKSAPI.Models
             }
             return kh;
         }
+
+        public List<KhachHang> KhachHangSelectTop(string Top, string Where, string Order)
+        {
+            List<KhachHang> khachHangs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblThanhToan_SelectTop");
+                cmd.Parameters.AddWithValue("@Top", Top);
+                cmd.Parameters.AddWithValue("@Where", Where);
+                cmd.Parameters.AddWithValue("@Order", Order);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    khachHangs = new List<KhachHang>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        khachHangs.Add(new KhachHang
+                        {
+                            MaKhach = ds.Tables[0].Rows[i]["MaKhach"].ToString(),
+                            HoDem = ds.Tables[0].Rows[i]["HoDem"].ToString(),
+                            Ten = ds.Tables[0].Rows[i]["Ten"].ToString(),
+                            NgaySinh = (DateTime)ds.Tables[0].Rows[i]["NgaySinh"],
+                            CMND = ds.Tables[0].Rows[i]["CMND"].ToString(),
+                            QuocTich = ds.Tables[0].Rows[i]["QuocTich"].ToString(),
+                            GhiChu = ds.Tables[0].Rows[i]["GhiChu"].ToString(),
+                        });
+                    }
+                }
+            }
+            return khachHangs;
+        }
         public bool insertKhachHang(KhachHang kh)
         {
             bool isSuccess = false;
             if (IsConnect())
             {
-                SqlCommand command = new SqlCommand("tblKhachHang_Insert");
+                SqlCommand command = new SqlCommand("tblKhachHang_SelectTop");
                 command.Parameters.AddWithValue("@MaKhach", kh.MaKhach);
                 command.Parameters.AddWithValue("@HoDem", kh.HoDem);
                 command.Parameters.AddWithValue("@Ten", kh.Ten);
@@ -662,6 +851,37 @@ namespace QLKSAPI.Models
                 }
             }
             return dv;
+        }
+
+        public List<DichVu> DichVuSelectTop(string Top, string Where, string Order)
+        {
+            List<DichVu> dichVus = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblDichVu_SelectTop");
+                cmd.Parameters.AddWithValue("@Top", Top);
+                cmd.Parameters.AddWithValue("@Where", Where);
+                cmd.Parameters.AddWithValue("@Order", Order);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    dichVus = new List<DichVu>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        dichVus.Add(new DichVu
+                        {
+                            MaDV = ds.Tables[0].Rows[i]["MaDV"].ToString(),
+                            TenDV = ds.Tables[0].Rows[i]["TenDV"].ToString(),
+                            GiaTien = (int)ds.Tables[0].Rows[i]["GiaTien"],
+                        });
+                    }
+                }
+            }
+            return dichVus;
         }
         public bool insertDichVu(DichVu dv)
         {
@@ -939,9 +1159,437 @@ namespace QLKSAPI.Models
             return isSuccess;
         }
 
+        public List<SDDV> SDDVSelectAll()
+        {
+            List<SDDV> sddvs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblSDDV_SelectAll");
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    sddvs = new List<SDDV>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        sddvs.Add(new SDDV
+                        {
+                            MaDK = ds.Tables[0].Rows[i]["MaDK"].ToString(),
+                            DichVu = new DichVu()
+                            {
+                                MaDV = ds.Tables[0].Rows[i]["MaDV"].ToString(),
+                                TenDV = ds.Tables[0].Rows[i]["TenDV"].ToString(),
+                                GiaTien = int.Parse(ds.Tables[0].Rows[i]["GiaTien"].ToString())
+                            },
+                            NhanVien = new NhanVien()
+                            {
+
+                                MaNV = ds.Tables[0].Rows[i]["MaNV"].ToString(),
+                                HoDem = ds.Tables[0].Rows[i]["HoDem"].ToString(),
+                                Ten = ds.Tables[0].Rows[i]["Ten"].ToString(),
+                                NgaySinh = DateTime.Parse(ds.Tables[0].Rows[i]["NgaySinh"].ToString()),
+                                CMND = ds.Tables[0].Rows[i]["CMND"].ToString()
+
+                            },
+                            NgaySuDung = DateTime.Parse(ds.Tables[0].Rows[i]["NgaySuDung"].ToString()),
+                            SoLuong = int.Parse(ds.Tables[0].Rows[i]["SoLuong"].ToString())
+
+                        });
+                    }
+                }
+            }
+            return sddvs;
+        }
+
+        public List<SDDV> SDDVSelectAllByID(string MaDK)
+        {
+            List<SDDV> sddvs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblSDDV_SelectAllByID");
+                cmd.Parameters.AddWithValue("@MaDK", MaDK);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    sddvs = new List<SDDV>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        sddvs.Add(new SDDV
+                        {
+                            MaDK = ds.Tables[0].Rows[0]["MaDK"].ToString(),
+                            DichVu = new DichVu()
+                            {
+                                MaDV = ds.Tables[0].Rows[0]["MaDV"].ToString(),
+                                TenDV = ds.Tables[0].Rows[0]["TenDV"].ToString(),
+                                GiaTien = int.Parse(ds.Tables[0].Rows[0]["GiaTien"].ToString())
+                            },
+                            NhanVien = new NhanVien()
+                            {
+
+                                MaNV = ds.Tables[0].Rows[0]["MaNV"].ToString(),
+                                HoDem = ds.Tables[0].Rows[i]["HoDem"].ToString(),
+                                Ten = ds.Tables[0].Rows[0]["Ten"].ToString(),
+                                NgaySinh = DateTime.Parse(ds.Tables[0].Rows[0]["NgaySinh"].ToString()),
+                                CMND = ds.Tables[0].Rows[0]["CMND"].ToString()
+
+                            },
+                            NgaySuDung = DateTime.Parse(ds.Tables[0].Rows[0]["NgaySuDung"].ToString()),
+                            SoLuong = int.Parse(ds.Tables[0].Rows[0]["SoLuong"].ToString())
+                        });
+                    }
+                }
+            }
+            return sddvs;
+        }
+
+        public List<SDDV> SDDVSelectByID(string MaDK, string MaDV)
+        {
+            List<SDDV> sddvs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblSDDV_SelectByID");
+                cmd.Parameters.AddWithValue("@MaDK", MaDK);
+                cmd.Parameters.AddWithValue("@MaDV", MaDV);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    sddvs = new List<SDDV>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        sddvs.Add(new SDDV
+                        {
+                            MaDK = ds.Tables[0].Rows[0]["MaDK"].ToString(),
+                            DichVu = new DichVu()
+                            {
+                                MaDV = ds.Tables[0].Rows[0]["MaDV"].ToString(),
+                                TenDV = ds.Tables[0].Rows[0]["TenDV"].ToString(),
+                                GiaTien = int.Parse(ds.Tables[0].Rows[0]["GiaTien"].ToString())
+                            },
+                            NhanVien = new NhanVien()
+                            {
+
+                                MaNV = ds.Tables[0].Rows[0]["MaNV"].ToString(),
+                                HoDem = ds.Tables[0].Rows[i]["HoDem"].ToString(),
+                                Ten = ds.Tables[0].Rows[0]["Ten"].ToString(),
+                                NgaySinh = DateTime.Parse(ds.Tables[0].Rows[0]["NgaySinh"].ToString()),
+                                CMND = ds.Tables[0].Rows[0]["CMND"].ToString()
+
+                            },
+                            NgaySuDung = DateTime.Parse(ds.Tables[0].Rows[0]["NgaySuDung"].ToString()),
+                            SoLuong = int.Parse(ds.Tables[0].Rows[0]["SoLuong"].ToString())
+                        });
+                    }
+                }
+            }
+            return sddvs;
+        }
+
+        public List<SDDV> SDDVSelectTop(string Top, string Where, string Order)
+        {
+            List<SDDV> sddvs = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblSDDV_SelectTop");
+                cmd.Parameters.AddWithValue("@Top", Top);
+                cmd.Parameters.AddWithValue("@Where", Where);
+                cmd.Parameters.AddWithValue("@Order", Order);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    sddvs = new List<SDDV>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        sddvs.Add(new SDDV
+                        {
+                            MaDK = ds.Tables[0].Rows[0]["MaDK"].ToString(),
+                            DichVu = new DichVu()
+                            {
+                                MaDV = ds.Tables[0].Rows[0]["MaDV"].ToString(),
+                                TenDV = ds.Tables[0].Rows[0]["TenDV"].ToString(),
+                                GiaTien = int.Parse(ds.Tables[0].Rows[0]["GiaTien"].ToString())
+                            },
+                            NhanVien = new NhanVien()
+                            {
+
+                                MaNV = ds.Tables[0].Rows[0]["MaNV"].ToString(),
+                                HoDem = ds.Tables[0].Rows[0]["HoDem"].ToString(),
+                                Ten = ds.Tables[0].Rows[0]["Ten"].ToString(),
+                                NgaySinh = DateTime.Parse(ds.Tables[0].Rows[0]["NgaySinh"].ToString()),
+                                CMND = ds.Tables[0].Rows[0]["CMND"].ToString()
+
+                            },
+                            NgaySuDung = DateTime.Parse(ds.Tables[0].Rows[0]["NgaySuDung"].ToString()),
+                            SoLuong = int.Parse(ds.Tables[0].Rows[0]["SoLuong"].ToString())
+                        });
+                    }
+                }
+            }
+            return sddvs;
+        }
+
+
+        public bool SDDVTestByID(string MaDK, string MaDV)
+        {
+            bool b = false;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblSDDV_TestByID");
+                cmd.Parameters.AddWithValue("@MaDK", MaDK);
+                cmd.Parameters.AddWithValue("@MaDV", MaDV);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    b = Convert.ToBoolean(ds.Tables[1].Rows[0]["TestID"].ToString());
+                }
+            }
+            return b;
+        }
+
+
+        public bool SDDVInsert(SDDV nv)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblSDDV_Insert");
+                command.Parameters.AddWithValue("@MaDK", nv.MaDK);
+                command.Parameters.AddWithValue("@MaDV", nv.DichVu.MaDV);
+                command.Parameters.AddWithValue("@MaNV", nv.NhanVien.MaNV);
+                command.Parameters.AddWithValue("@NgaySD", nv.NgaySuDung);
+                command.Parameters.AddWithValue("@SoLuong", nv.SoLuong);
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+
+        public bool SDDVDelete(string MaDK, string MaDV)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblSDDV_Delete");
+                command.Parameters.AddWithValue("@MaDK", MaDK);
+                command.Parameters.AddWithValue("@MaDV", MaDV);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool SDDVUpdate(SDDV cv)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblSDDV_Update");
+                command.Parameters.AddWithValue("@MaDK", cv.MaDK);
+                command.Parameters.AddWithValue("@MaDV", cv.DichVu.MaDV);
+                command.Parameters.AddWithValue("@MaNV", cv.NhanVien.MaNV);
+                command.Parameters.AddWithValue("@NgaySuDung", cv.NgaySuDung);
+                command.Parameters.AddWithValue("@SoLuong", cv.SoLuong);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public List<ThanhToan> ThanhToanSelectAll()
+        {
+            List<ThanhToan> thanhToans = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblThanhToan_SelectAll");
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    thanhToans = new List<ThanhToan>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        thanhToans.Add(new ThanhToan
+                        {
+                            MaDK = ds.Tables[0].Rows[i]["MaDK"].ToString(),
+                            MaPhong = ds.Tables[0].Rows[i]["MaPhong"].ToString(),
+                            MaNV = ds.Tables[0].Rows[i]["MaNV"].ToString(),
+                            NgayThanhToan = DateTime.Parse(ds.Tables[0].Rows[i]["NgayThanhToan"].ToString())
+
+                        });
+                    }
+                }
+            }
+            return thanhToans;
+        }
+
+        public List<ThanhToan> ThanhToanSelectAllByID(string MaDK, string MaPhong)
+        {
+            List<ThanhToan> thanToans = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblThanhToan_SelectByID");
+                cmd.Parameters.AddWithValue("@MaDK", MaDK);
+                cmd.Parameters.AddWithValue("@MaPhong", MaPhong);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    thanToans = new List<ThanhToan>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        thanToans.Add(new ThanhToan
+                        {
+                            MaDK = ds.Tables[0].Rows[0]["MaDK"].ToString(),
+                            MaPhong = ds.Tables[0].Rows[0]["MaPhong"].ToString(),
+                            MaNV = ds.Tables[0].Rows[0]["MaNV"].ToString(),
+                            NgayThanhToan = DateTime.Parse(ds.Tables[0].Rows[0]["NgayThanhToan"].ToString())
+                        });
+                    }
+                }
+            }
+            return thanToans;
+        }
+
+
+
+        public List<ThanhToan> ThanhToanSelectTop(string Top, string Where, string Order)
+        {
+            List<ThanhToan> thanhToans = null;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblThanhToan_SelectTop");
+                cmd.Parameters.AddWithValue("@Top", Top);
+                cmd.Parameters.AddWithValue("@Where", Where);
+                cmd.Parameters.AddWithValue("@Order", Order);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    thanhToans = new List<ThanhToan>();
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        thanhToans.Add(new ThanhToan
+                        {
+                            MaDK = ds.Tables[0].Rows[0]["MaDK"].ToString(),
+                            MaPhong = ds.Tables[0].Rows[0]["MaPhong"].ToString(),
+                            MaNV = ds.Tables[0].Rows[0]["MaNV"].ToString(),
+                            NgayThanhToan = DateTime.Parse(ds.Tables[0].Rows[0]["NgayThanhToan"].ToString())
+                        });
+                    }
+                }
+            }
+            return thanhToans;
+        }
+
+        public bool ThanhToanTestByID(string MaDK, string MaPhong)
+        {
+            bool b = false;
+            if (IsConnect())
+            {
+                SqlCommand cmd = new SqlCommand("tblThanhToan_TestByID");
+                cmd.Parameters.AddWithValue("@MaDK", MaDK);
+                cmd.Parameters.AddWithValue("@MaPhong", MaPhong);
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                DataSet ds = new DataSet();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    b = Convert.ToBoolean(ds.Tables[1].Rows[0]["TestID"].ToString());
+                }
+            }
+            return b;
+        }
+
+
+        public bool ThanhToanInsert(ThanhToan tt)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblThanhToan_Insert");
+                command.Parameters.AddWithValue("@MaDK", tt.MaDK);
+                command.Parameters.AddWithValue("@MaPhong", tt.MaPhong);
+                command.Parameters.AddWithValue("@MaNV", tt.MaNV);
+                command.Parameters.AddWithValue("@NgayThanhToan", tt.NgayThanhToan);
+
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+
+        public bool ThanhToanDelete(string MaDK, string MaPhong)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblThanhToan_Delete");
+                command.Parameters.AddWithValue("@MaDK", MaDK);
+                command.Parameters.AddWithValue("@MaPhong", MaPhong);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
+
+        public bool ThanhToanUpdate(ThanhToan tt)
+        {
+            bool isSuccess = false;
+            if (IsConnect())
+            {
+                SqlCommand command = new SqlCommand("tblThanhToan_Update");
+                command.Parameters.AddWithValue("@MaDK", tt.MaDK);
+                command.Parameters.AddWithValue("@MaPhong", tt.MaPhong);
+                command.Parameters.AddWithValue("@MaNV", tt.MaNV);
+                command.Parameters.AddWithValue("@NgayThanhToan", tt.NgayThanhToan);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Connection = con;
+                isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
+            }
+            return isSuccess;
+        }
     }
 
 
+
+    
 
 
 
