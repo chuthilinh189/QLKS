@@ -960,6 +960,17 @@ namespace QLKSAPI.Models
                         dk.KhachHangDK.CMND = ds.Tables[0].Rows[i]["CMND"].ToString();
                         dk.KhachHangDK.QuocTich = ds.Tables[0].Rows[i]["QuocTich"].ToString();
                         dk.KhachHangDK.GhiChu = ds.Tables[0].Rows[i]["GhiChu"].ToString();
+                        dk.NgayDangKy = (DateTime)ds.Tables[0].Rows[i]["NgayDangKy"];
+                        dk.NgayDen = null;
+                        dk.NgayDi = null;
+                        if(ds.Tables[0].Rows[i]["NgayDen"] != null)
+                        {
+                            dk.NgayDen = (DateTime)ds.Tables[0].Rows[i]["NgayDen"];
+                        }
+                        if (ds.Tables[0].Rows[i]["NgayDi"] != null)
+                        {
+                            dk.NgayDi = (DateTime)ds.Tables[0].Rows[i]["NgayDi"];
+                        }
                         dk.TienDat = (int)ds.Tables[0].Rows[i]["TienDat"];
                         dk.SoNguoi = (int)ds.Tables[0].Rows[i]["SoNguoi"];
                         dk.GhiChu = ds.Tables[0].Rows[i]["NgiChu"].ToString();
@@ -1003,6 +1014,17 @@ namespace QLKSAPI.Models
                         dk.KhachHangDK.CMND = ds.Tables[0].Rows[i]["CMND"].ToString();
                         dk.KhachHangDK.QuocTich = ds.Tables[0].Rows[i]["QuocTich"].ToString();
                         dk.KhachHangDK.GhiChu = ds.Tables[0].Rows[i]["GhiChu"].ToString();
+                        dk.NgayDangKy = (DateTime)ds.Tables[0].Rows[i]["NgayDangKy"];
+                        dk.NgayDen = null;
+                        dk.NgayDi = null;
+                        if (ds.Tables[0].Rows[i]["NgayDen"] != null)
+                        {
+                            dk.NgayDen = (DateTime)ds.Tables[0].Rows[i]["NgayDen"];
+                        }
+                        if (ds.Tables[0].Rows[i]["NgayDi"] != null)
+                        {
+                            dk.NgayDi = (DateTime)ds.Tables[0].Rows[i]["NgayDi"];
+                        }
                         dk.TienDat = (int)ds.Tables[0].Rows[i]["TienDat"];
                         dk.SoNguoi = (int)ds.Tables[0].Rows[i]["SoNguoi"];
                         dk.GhiChu = ds.Tables[0].Rows[i]["NgiChu"].ToString();
@@ -1042,6 +1064,17 @@ namespace QLKSAPI.Models
                     dangKys.KhachHangDK.CMND = ds.Tables[0].Rows[0]["CMND"].ToString();
                     dangKys.KhachHangDK.QuocTich = ds.Tables[0].Rows[0]["QuocTich"].ToString();
                     dangKys.KhachHangDK.GhiChu = ds.Tables[0].Rows[0]["GhiChu"].ToString();
+                    dangKys.NgayDangKy = (DateTime)ds.Tables[0].Rows[0]["NgayDangKy"];
+                    dangKys.NgayDen = null;
+                    dangKys.NgayDi = null;
+                    if (ds.Tables[0].Rows[0]["NgayDen"] != null)
+                    {
+                        dangKys.NgayDen = (DateTime)ds.Tables[0].Rows[0]["NgayDen"];
+                    }
+                    if (ds.Tables[0].Rows[0]["NgayDi"] != null)
+                    {
+                        dangKys.NgayDi = (DateTime)ds.Tables[0].Rows[0]["NgayDi"];
+                    }
                     dangKys.TienDat = (int)ds.Tables[0].Rows[0]["TienDat"];
                     dangKys.SoNguoi = (int)ds.Tables[0].Rows[0]["SoNguoi"];
                     dangKys.GhiChu = ds.Tables[0].Rows[0]["NgiChu"].ToString();
