@@ -40,7 +40,7 @@ namespace QLKSAPI.Controllers
         [Route("api/Phong_Insert")]
         public HttpResponseMessage InsertLoaiPhong([FromBody] Phong p)
         {
-
+            p.MaPhong = Helper.EnCode(DateTime.Now.ToString("yyyy-mm-dd:hh-mm-ss"));
             return con.insertPhong(p) ? Request.CreateResponse(HttpStatusCode.Created, p) : Request.CreateResponse(HttpStatusCode.Conflict);
         }
 

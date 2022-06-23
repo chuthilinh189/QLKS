@@ -39,7 +39,7 @@ namespace QLKSAPI.Controllers
         [Route("api/DichVu_Insert")]
         public HttpResponseMessage InsertLoaiPhong([FromBody] DichVu dv)
         {
-
+            dv.MaDV = Helper.EnCode(DateTime.Now.ToString("yyyy-mm-dd:hh-mm-ss"));
             return con.insertDichVu(dv) ? Request.CreateResponse(HttpStatusCode.Created, dv) : Request.CreateResponse(HttpStatusCode.Conflict);
         }
 

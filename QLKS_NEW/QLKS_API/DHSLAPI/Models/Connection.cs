@@ -963,11 +963,11 @@ namespace QLKSAPI.Models
                         dk.NgayDangKy = (DateTime)ds.Tables[0].Rows[i]["NgayDangKy"];
                         dk.NgayDen = null;
                         dk.NgayDi = null;
-                        if(ds.Tables[0].Rows[i]["NgayDen"] != null)
+                        if (ds.Tables[0].Rows[i]["NgayDen"].ToString() != "")
                         {
                             dk.NgayDen = (DateTime)ds.Tables[0].Rows[i]["NgayDen"];
                         }
-                        if (ds.Tables[0].Rows[i]["NgayDi"] != null)
+                        if (ds.Tables[0].Rows[i]["NgayDi"].ToString() != "")
                         {
                             dk.NgayDi = (DateTime)ds.Tables[0].Rows[i]["NgayDi"];
                         }
@@ -1017,11 +1017,11 @@ namespace QLKSAPI.Models
                         dk.NgayDangKy = (DateTime)ds.Tables[0].Rows[i]["NgayDangKy"];
                         dk.NgayDen = null;
                         dk.NgayDi = null;
-                        if (ds.Tables[0].Rows[i]["NgayDen"] != null)
+                        if (ds.Tables[0].Rows[i]["NgayDen"].ToString() != "")
                         {
                             dk.NgayDen = (DateTime)ds.Tables[0].Rows[i]["NgayDen"];
                         }
-                        if (ds.Tables[0].Rows[i]["NgayDi"] != null)
+                        if (ds.Tables[0].Rows[i]["NgayDi"].ToString() != "")
                         {
                             dk.NgayDi = (DateTime)ds.Tables[0].Rows[i]["NgayDi"];
                         }
@@ -1067,11 +1067,11 @@ namespace QLKSAPI.Models
                     dangKys.NgayDangKy = (DateTime)ds.Tables[0].Rows[0]["NgayDangKy"];
                     dangKys.NgayDen = null;
                     dangKys.NgayDi = null;
-                    if (ds.Tables[0].Rows[0]["NgayDen"] != null)
+                    if (ds.Tables[0].Rows[0]["NgayDen"].ToString() != "")
                     {
                         dangKys.NgayDen = (DateTime)ds.Tables[0].Rows[0]["NgayDen"];
                     }
-                    if (ds.Tables[0].Rows[0]["NgayDi"] != null)
+                    if (ds.Tables[0].Rows[0]["NgayDi"].ToString() != "")
                     {
                         dangKys.NgayDi = (DateTime)ds.Tables[0].Rows[0]["NgayDi"];
                     }
@@ -1361,7 +1361,7 @@ namespace QLKSAPI.Models
                 command.Parameters.AddWithValue("@MaDK", nv.MaDK);
                 command.Parameters.AddWithValue("@MaDV", nv.DichVu.MaDV);
                 command.Parameters.AddWithValue("@MaNV", nv.NhanVien.MaNV);
-                command.Parameters.AddWithValue("@NgaySD", nv.NgaySuDung);
+                command.Parameters.AddWithValue("@NgaySuDung", nv.NgaySuDung);
                 command.Parameters.AddWithValue("@SoLuong", nv.SoLuong);
 
                 command.CommandType = CommandType.StoredProcedure;
