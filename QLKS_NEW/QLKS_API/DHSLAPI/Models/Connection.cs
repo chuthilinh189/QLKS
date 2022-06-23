@@ -965,11 +965,11 @@ namespace QLKSAPI.Models
                         dk.NgayDi = null;
                         if (ds.Tables[0].Rows[i]["NgayDen"].ToString() != "")
                         {
-                            dk.NgayDen = (DateTime)ds.Tables[0].Rows[i]["NgayDen"];
+                            dk.NgayDen = (DateTime?)ds.Tables[0].Rows[i]["NgayDen"];
                         }
                         if (ds.Tables[0].Rows[i]["NgayDi"].ToString() != "")
                         {
-                            dk.NgayDi = (DateTime)ds.Tables[0].Rows[i]["NgayDi"];
+                            dk.NgayDi = (DateTime?)ds.Tables[0].Rows[i]["NgayDi"];
                         }
                         dk.TienDat = (int)ds.Tables[0].Rows[i]["TienDat"];
                         dk.SoNguoi = (int)ds.Tables[0].Rows[i]["SoNguoi"];
@@ -1019,11 +1019,11 @@ namespace QLKSAPI.Models
                         dk.NgayDi = null;
                         if (ds.Tables[0].Rows[i]["NgayDen"].ToString() != "")
                         {
-                            dk.NgayDen = (DateTime)ds.Tables[0].Rows[i]["NgayDen"];
+                            dk.NgayDen = (DateTime?)ds.Tables[0].Rows[i]["NgayDen"];
                         }
                         if (ds.Tables[0].Rows[i]["NgayDi"].ToString() != "")
                         {
-                            dk.NgayDi = (DateTime)ds.Tables[0].Rows[i]["NgayDi"];
+                            dk.NgayDi = (DateTime?)ds.Tables[0].Rows[i]["NgayDi"];
                         }
                         dk.TienDat = (int)ds.Tables[0].Rows[i]["TienDat"];
                         dk.SoNguoi = (int)ds.Tables[0].Rows[i]["SoNguoi"];
@@ -1069,11 +1069,11 @@ namespace QLKSAPI.Models
                     dangKys.NgayDi = null;
                     if (ds.Tables[0].Rows[0]["NgayDen"].ToString() != "")
                     {
-                        dangKys.NgayDen = (DateTime)ds.Tables[0].Rows[0]["NgayDen"];
+                        dangKys.NgayDen = (DateTime?)ds.Tables[0].Rows[0]["NgayDen"];
                     }
                     if (ds.Tables[0].Rows[0]["NgayDi"].ToString() != "")
                     {
-                        dangKys.NgayDi = (DateTime)ds.Tables[0].Rows[0]["NgayDi"];
+                        dangKys.NgayDi = (DateTime?)ds.Tables[0].Rows[0]["NgayDi"];
                     }
                     dangKys.TienDat = (int)ds.Tables[0].Rows[0]["TienDat"];
                     dangKys.SoNguoi = (int)ds.Tables[0].Rows[0]["SoNguoi"];
