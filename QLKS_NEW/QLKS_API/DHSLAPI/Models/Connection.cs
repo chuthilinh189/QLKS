@@ -744,7 +744,7 @@ namespace QLKSAPI.Models
             bool isSuccess = false;
             if (IsConnect())
             {
-                SqlCommand command = new SqlCommand("tblKhachHang_SelectTop");
+                SqlCommand command = new SqlCommand("tblKhachHang_Insert");
                 command.Parameters.AddWithValue("@MaKhach", kh.MaKhach);
                 command.Parameters.AddWithValue("@HoDem", kh.HoDem);
                 command.Parameters.AddWithValue("@Ten", kh.Ten);
@@ -951,23 +951,34 @@ namespace QLKSAPI.Models
                     for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                     {
                         DangKy dk = new DangKy();
-                        dk.MaDK = ds.Tables[0].Rows[0]["MaDK"].ToString();
+                        dk.MaDK = ds.Tables[0].Rows[i]["MaDK"].ToString();
                         dk.KhachHangDK = new KhachHang();
-                        dk.KhachHangDK.MaKhach = ds.Tables[0].Rows[0]["MaKhach"].ToString();
-                        dk.KhachHangDK.HoDem = ds.Tables[0].Rows[0]["HoDem"].ToString();
-                        dk.KhachHangDK.Ten = ds.Tables[0].Rows[0]["Ten"].ToString();
-                        dk.KhachHangDK.NgaySinh = (DateTime)ds.Tables[0].Rows[0]["NgaySinh"];
-                        dk.KhachHangDK.CMND = ds.Tables[0].Rows[0]["CMND"].ToString();
-                        dk.KhachHangDK.QuocTich = ds.Tables[0].Rows[0]["QuocTich"].ToString();
-                        dk.KhachHangDK.GhiChu = ds.Tables[0].Rows[0]["GhiChu"].ToString();
-                        dk.TienDat = (int)ds.Tables[0].Rows[0]["TienDat"];
-                        dk.SoNguoi = (int)ds.Tables[0].Rows[0]["SoNguoi"];
-                        dk.GhiChu = ds.Tables[0].Rows[0]["NgiChu"].ToString();
+                        dk.KhachHangDK.MaKhach = ds.Tables[0].Rows[i]["MaKhach"].ToString();
+                        dk.KhachHangDK.HoDem = ds.Tables[0].Rows[i]["HoDem"].ToString();
+                        dk.KhachHangDK.Ten = ds.Tables[0].Rows[i]["Ten"].ToString();
+                        dk.KhachHangDK.NgaySinh = (DateTime)ds.Tables[0].Rows[i]["NgaySinh"];
+                        dk.KhachHangDK.CMND = ds.Tables[0].Rows[i]["CMND"].ToString();
+                        dk.KhachHangDK.QuocTich = ds.Tables[0].Rows[i]["QuocTich"].ToString();
+                        dk.KhachHangDK.GhiChu = ds.Tables[0].Rows[i]["GhiChu"].ToString();
+                        dk.NgayDangKy = (DateTime)ds.Tables[0].Rows[i]["NgayDangKy"];
+                        dk.NgayDen = null;
+                        dk.NgayDi = null;
+                        if(ds.Tables[0].Rows[i]["NgayDen"] != null)
+                        {
+                            dk.NgayDen = (DateTime)ds.Tables[0].Rows[i]["NgayDen"];
+                        }
+                        if (ds.Tables[0].Rows[i]["NgayDi"] != null)
+                        {
+                            dk.NgayDi = (DateTime)ds.Tables[0].Rows[i]["NgayDi"];
+                        }
+                        dk.TienDat = (int)ds.Tables[0].Rows[i]["TienDat"];
+                        dk.SoNguoi = (int)ds.Tables[0].Rows[i]["SoNguoi"];
+                        dk.GhiChu = ds.Tables[0].Rows[i]["NgiChu"].ToString();
                         dk.PhongDK = new Phong();
-                        dk.PhongDK.MaPhong = ds.Tables[0].Rows[0]["MaPhong"].ToString();
-                        dk.PhongDK.TenPhong = ds.Tables[0].Rows[0]["TenPhong"].ToString();
-                        dk.PhongDK.LoaiPhong = ds.Tables[0].Rows[0]["LoaiPhong"].ToString();
-                        dk.PhongDK.Gia = (int)ds.Tables[0].Rows[0]["Gia"];
+                        dk.PhongDK.MaPhong = ds.Tables[0].Rows[i]["MaPhong"].ToString();
+                        dk.PhongDK.TenPhong = ds.Tables[0].Rows[i]["TenPhong"].ToString();
+                        dk.PhongDK.LoaiPhong = ds.Tables[0].Rows[i]["LoaiPhong"].ToString();
+                        dk.PhongDK.Gia = (int)ds.Tables[0].Rows[i]["Gia"];
                         dangKys.Add(dk);
                     }
                 }
@@ -994,23 +1005,34 @@ namespace QLKSAPI.Models
                     for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                     {
                         DangKy dk = new DangKy();
-                        dk.MaDK = ds.Tables[0].Rows[0]["MaDK"].ToString();
+                        dk.MaDK = ds.Tables[0].Rows[i]["MaDK"].ToString();
                         dk.KhachHangDK = new KhachHang();
-                        dk.KhachHangDK.MaKhach = ds.Tables[0].Rows[0]["MaKhach"].ToString();
-                        dk.KhachHangDK.HoDem = ds.Tables[0].Rows[0]["HoDem"].ToString();
-                        dk.KhachHangDK.Ten = ds.Tables[0].Rows[0]["Ten"].ToString();
-                        dk.KhachHangDK.NgaySinh = (DateTime)ds.Tables[0].Rows[0]["NgaySinh"];
-                        dk.KhachHangDK.CMND = ds.Tables[0].Rows[0]["CMND"].ToString();
-                        dk.KhachHangDK.QuocTich = ds.Tables[0].Rows[0]["QuocTich"].ToString();
-                        dk.KhachHangDK.GhiChu = ds.Tables[0].Rows[0]["GhiChu"].ToString();
-                        dk.TienDat = (int)ds.Tables[0].Rows[0]["TienDat"];
-                        dk.SoNguoi = (int)ds.Tables[0].Rows[0]["SoNguoi"];
-                        dk.GhiChu = ds.Tables[0].Rows[0]["NgiChu"].ToString();
+                        dk.KhachHangDK.MaKhach = ds.Tables[0].Rows[i]["MaKhach"].ToString();
+                        dk.KhachHangDK.HoDem = ds.Tables[0].Rows[i]["HoDem"].ToString();
+                        dk.KhachHangDK.Ten = ds.Tables[0].Rows[i]["Ten"].ToString();
+                        dk.KhachHangDK.NgaySinh = (DateTime)ds.Tables[0].Rows[i]["NgaySinh"];
+                        dk.KhachHangDK.CMND = ds.Tables[0].Rows[i]["CMND"].ToString();
+                        dk.KhachHangDK.QuocTich = ds.Tables[0].Rows[i]["QuocTich"].ToString();
+                        dk.KhachHangDK.GhiChu = ds.Tables[0].Rows[i]["GhiChu"].ToString();
+                        dk.NgayDangKy = (DateTime)ds.Tables[0].Rows[i]["NgayDangKy"];
+                        dk.NgayDen = null;
+                        dk.NgayDi = null;
+                        if (ds.Tables[0].Rows[i]["NgayDen"] != null)
+                        {
+                            dk.NgayDen = (DateTime)ds.Tables[0].Rows[i]["NgayDen"];
+                        }
+                        if (ds.Tables[0].Rows[i]["NgayDi"] != null)
+                        {
+                            dk.NgayDi = (DateTime)ds.Tables[0].Rows[i]["NgayDi"];
+                        }
+                        dk.TienDat = (int)ds.Tables[0].Rows[i]["TienDat"];
+                        dk.SoNguoi = (int)ds.Tables[0].Rows[i]["SoNguoi"];
+                        dk.GhiChu = ds.Tables[0].Rows[i]["NgiChu"].ToString();
                         dk.PhongDK = new Phong();
-                        dk.PhongDK.MaPhong = ds.Tables[0].Rows[0]["MaPhong"].ToString();
-                        dk.PhongDK.TenPhong = ds.Tables[0].Rows[0]["TenPhong"].ToString();
-                        dk.PhongDK.LoaiPhong = ds.Tables[0].Rows[0]["LoaiPhong"].ToString();
-                        dk.PhongDK.Gia = (int)ds.Tables[0].Rows[0]["Gia"];
+                        dk.PhongDK.MaPhong = ds.Tables[0].Rows[i]["MaPhong"].ToString();
+                        dk.PhongDK.TenPhong = ds.Tables[0].Rows[i]["TenPhong"].ToString();
+                        dk.PhongDK.LoaiPhong = ds.Tables[0].Rows[i]["LoaiPhong"].ToString();
+                        dk.PhongDK.Gia = (int)ds.Tables[0].Rows[i]["Gia"];
                         dangKys.Add(dk);
                     }
                 }
@@ -1042,6 +1064,17 @@ namespace QLKSAPI.Models
                     dangKys.KhachHangDK.CMND = ds.Tables[0].Rows[0]["CMND"].ToString();
                     dangKys.KhachHangDK.QuocTich = ds.Tables[0].Rows[0]["QuocTich"].ToString();
                     dangKys.KhachHangDK.GhiChu = ds.Tables[0].Rows[0]["GhiChu"].ToString();
+                    dangKys.NgayDangKy = (DateTime)ds.Tables[0].Rows[0]["NgayDangKy"];
+                    dangKys.NgayDen = null;
+                    dangKys.NgayDi = null;
+                    if (ds.Tables[0].Rows[0]["NgayDen"] != null)
+                    {
+                        dangKys.NgayDen = (DateTime)ds.Tables[0].Rows[0]["NgayDen"];
+                    }
+                    if (ds.Tables[0].Rows[0]["NgayDi"] != null)
+                    {
+                        dangKys.NgayDi = (DateTime)ds.Tables[0].Rows[0]["NgayDi"];
+                    }
                     dangKys.TienDat = (int)ds.Tables[0].Rows[0]["TienDat"];
                     dangKys.SoNguoi = (int)ds.Tables[0].Rows[0]["SoNguoi"];
                     dangKys.GhiChu = ds.Tables[0].Rows[0]["NgiChu"].ToString();
@@ -1050,57 +1083,10 @@ namespace QLKSAPI.Models
                     dangKys.PhongDK.TenPhong = ds.Tables[0].Rows[0]["TenPhong"].ToString();
                     dangKys.PhongDK.LoaiPhong = ds.Tables[0].Rows[0]["LoaiPhong"].ToString();
                     dangKys.PhongDK.Gia = (int)ds.Tables[0].Rows[0]["Gia"];
-                    //{
-                    //    MaDK = ds.Tables[0].Rows[0]["MaDK"].ToString(),
-                    //    //NgayDangKy = DateTime.Parse(ds.Tables[0].Rows[i]["NgayDangKy"].ToString()),
-                    //    //NgayDen = ds.Tables[0].Rows[i]["NgayDen"] != null ? DateTime.Parse(ds.Tables[0].Rows[i]["NgayDen"].ToString()) : null,
-                    //    //NgayDi = ds.Tables[0].Rows[i]["NgayDi"] != null ? DateTime.Parse(ds.Tables[0].Rows[i]["NgayDi"].ToString()) : null,
-                    //    TienDat = (int)ds.Tables[0].Rows[0]["TienDat"],
-                    //    SoNguoi = (int)ds.Tables[0].Rows[0]["SoNguoi"],
-                    //    GhiChu = ds.Tables[0].Rows[0]["NgiChu"].ToString(),
-                    //    KhachHangDK =
-                    //    {
-                    //        MaKhach = ds.Tables[0].Rows[0]["MaKhach"].ToString(),
-                    //        HoDem = ds.Tables[0].Rows[0]["HoDem"].ToString(),
-                    //        Ten = ds.Tables[0].Rows[0]["Ten"].ToString(),
-                    //        NgaySinh = (DateTime)ds.Tables[0].Rows[0]["NgaySinh"],
-                    //        CMND = ds.Tables[0].Rows[0]["CMND"].ToString(),
-                    //        QuocTich = ds.Tables[0].Rows[0]["QuocTich"].ToString(),
-                    //        GhiChu = ds.Tables[0].Rows[0]["GhiChu"].ToString(),
-                    //    },
-                    //    PhongDK =
-                    //    {
-                    //        MaPhong = ds.Tables[0].Rows[0]["MaPhong"].ToString(),
-                    //        TenPhong = ds.Tables[0].Rows[0]["TenPhong"].ToString(),
-                    //        LoaiPhong = ds.Tables[0].Rows[0]["LoaiPhong"].ToString(),
-                    //        Gia = (int)ds.Tables[0].Rows[0]["Gia"],
-                    //    }
-                    //};
-
                 }
             }
             return dangKys;
         }
-
-        //public bool DangKyTestByID(string MaCV)
-        //{
-        //    bool b = false;
-        //    if (IsConnect())
-        //    {
-        //        SqlCommand cmd = new SqlCommand("tblDangKy_TestByID");
-        //        cmd.Parameters.AddWithValue("@MaCV", MaCV);
-        //        cmd.Connection = con;
-        //        cmd.CommandType = CommandType.StoredProcedure;
-        //        DataSet ds = new DataSet();
-        //        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-        //        adapter.Fill(ds);
-        //        if (ds.Tables[0].Rows.Count > 0)
-        //        {
-        //            b = Convert.ToBoolean(ds.Tables[1].Rows[0]["TestID"].ToString());
-        //        }
-        //    }
-        //    return b;
-        //}
 
         public bool DangKyInsert(DangKy dk)
         {
@@ -1117,6 +1103,7 @@ namespace QLKSAPI.Models
                 command.Parameters.AddWithValue("@TienDat", dk.TienDat);
                 command.Parameters.AddWithValue("@SoNguoi", dk.SoNguoi);
                 command.Parameters.AddWithValue("@NgiChu", dk.GhiChu);
+                command.CommandType = CommandType.StoredProcedure;
                 command.Connection = con;
                 isSuccess = command.ExecuteNonQuery() > 0 ? true : false;
             }
