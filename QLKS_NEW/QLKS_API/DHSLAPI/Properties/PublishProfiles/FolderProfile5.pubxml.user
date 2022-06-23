@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\QLKhachSan\QLKS\QLKS_NEW\API_public</_PublishTargetUrl>
-    <History>True|2022-06-21T15:39:51.5736438Z;</History>
+    <History>True|2022-06-23T01:59:14.5243845Z;True|2022-06-23T08:57:26.3533866+07:00;True|2022-06-23T07:03:48.4825470+07:00;True|2022-06-21T22:39:51.5736438+07:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
@@ -84,10 +84,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/08/2022 08:01:28</publishTime>
     </File>
     <File Include="bin/DHSLAPI.dll">
-      <publishTime>06/21/2022 22:39:50</publishTime>
+      <publishTime>06/23/2022 08:59:13</publishTime>
     </File>
     <File Include="bin/DHSLAPI.pdb">
-      <publishTime>06/21/2022 22:39:50</publishTime>
+      <publishTime>06/23/2022 08:59:13</publishTime>
     </File>
     <File Include="bin/DocumentFormat.OpenXml.dll">
       <publishTime>04/08/2022 08:01:31</publishTime>
@@ -375,7 +375,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/08/2022 08:01:31</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>06/21/2022 22:39:50</publishTime>
+      <publishTime>06/23/2022 07:03:47</publishTime>
     </File>
   </ItemGroup>
 </Project>

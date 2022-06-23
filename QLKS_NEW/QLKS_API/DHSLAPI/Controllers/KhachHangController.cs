@@ -36,7 +36,7 @@ namespace QLKSAPI.Controllers
         [Route("api/KhachHang_Insert")]
         public HttpResponseMessage insertKhachHang([FromBody] KhachHang kh)
         {
-
+            kh.MaKhach = Helper.EnCode(DateTime.Now.ToString("yyyy-mm-dd:hh-mm-ss"));
             return con.insertKhachHang(kh) ? Request.CreateResponse(HttpStatusCode.Created, kh) : Request.CreateResponse(HttpStatusCode.Conflict);
         }
 

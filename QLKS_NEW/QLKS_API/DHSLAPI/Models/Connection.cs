@@ -744,7 +744,7 @@ namespace QLKSAPI.Models
             bool isSuccess = false;
             if (IsConnect())
             {
-                SqlCommand command = new SqlCommand("tblKhachHang_SelectTop");
+                SqlCommand command = new SqlCommand("tblKhachHang_Insert");
                 command.Parameters.AddWithValue("@MaKhach", kh.MaKhach);
                 command.Parameters.AddWithValue("@HoDem", kh.HoDem);
                 command.Parameters.AddWithValue("@Ten", kh.Ten);
